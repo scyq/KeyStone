@@ -22,19 +22,6 @@ $("#uploadfile").change(
     }
 )
 
-// 绑定spinner，限制RGB的数值
-$("#redBg").spinner({
-    max: 255,
-    min: 0
-});
-$("#greenBg").spinner({
-    max: 255,
-    min: 0
-});
-$("#blueBg").spinner({
-    max: 255,
-    min: 0
-});
 
 // 按下确定按钮后会把组件直接添加到末尾
 $("#confirmButton").button().click(
