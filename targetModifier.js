@@ -8,9 +8,43 @@ let widgetList = {
 // 创建selectmenu
 $("#widgetSelector").selectmenu();
 
+// 上传文件
+$("#uploadButton").button().click(
+    function() {
+        //触发uploaFile的input
+        $("#uploadFile").click();
+    }
+);
+
+$("#uploadfile").change(
+    function() {
+        $("#uploadForm").submit();
+    }
+)
+
+// 绑定spinner，限制RGB的数值
+$("#redBg").spinner({
+    max: 255,
+    min: 0
+});
+$("#greenBg").spinner({
+    max: 255,
+    min: 0
+});
+$("#blueBg").spinner({
+    max: 255,
+    min: 0
+});
+
 // 按下确定按钮后会把组件直接添加到末尾
 $("#confirmButton").button().click(
     function (event) {
+        // 改变背景颜色
+        const r = parseInt($("#redBg").val());
+        const g = parseInt($("#greenBg").val());
+        const b = parseInt($("#blueBg").val());
+        document.body.style.background = "rgb(" + r + "," + g + "," + b + ")";
+
         // 先获取当前选定的元素
         const widgetType = $("#widgetSelector").val();
         
