@@ -12,43 +12,19 @@
     </head>
 
     <style>
-        #redBgTxt {
-            color: red;
-        }
-
-        #greenBgTxt {
-            color: green;
-        }
-
-        #blueBgTxt {
-            color: blue;
+        .hint {
+            color: orange;
         }
 
     </style>
 
     <body>
 
-        <h1>欢迎来到Web原型自动生成器 <small>v0.1.2</small></h1>
+        <h1>欢迎来到Web原型自动生成器 <small>v0.1.3</small></h1>
 
-        <!-- 选择背景颜色 -->
-        <label for="redBg" id="redBgTxt">背景颜色R</label>
-        <input id="redBg" value="255" type="number" placeholder="0~255" oninput="if(value<0 || value>255){alert('非法输入！'); value='255';}">
-
-        <label for="greenBg" id="greenBgTxt">背景颜色G</label>
-        <input id="greenBg" value="255" type="number" placeholder="0~255" oninput="if(value<0 || value>255){alert('非法输入！'); value='255'};">
-
-        <label for="blueBg" id="blueBgTxt">背景颜色B</label>
-        <input id="blueBg" value="255" type="number" placeholder="0~255" oninput="if(value<0 || value>255){alert('非法输入！'); value='255';}">
-
-        <label>背景图上传</label>
-        <input type="button" id="uploadButton" value="选择文件"> 
-        <!-- 一键上传弹窗 -->
-        <form style="display: none;" id="uploadForm" target="uploadPopForm">
-            <input type="file" name="uploadFile" id="uploadFile"/>
-        </form>
-        <iframe style="display: none;" id="uploadPopFrom"></iframe>
-
-
+        <!-- 输入想要的背景颜色 -->
+        <label for="bgColorInput" class="hint">输入你想要的背景颜色</label>
+        <input id="bgColorInput" type="text" placeholder="绿色">
 
         <!-- 下拉选框，让用户选择 -->
         <p><b>请选择您要添加的组件</b></p>
