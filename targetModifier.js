@@ -2,7 +2,8 @@
 let widgetList = {
     button: -1,
     progressBar: -1,
-    dialog: -1
+    dialog: -1,
+    div: 3
 }
 
 // 颜色表
@@ -105,10 +106,25 @@ $("#bgColorInput").autocomplete({
     source: colorTag
 });
 
+// 绑定拖动网格
+for (let i = 0; i <= widgetList.div; i++){
+    let bundle_div = "#grid" + i;
+    $(bundle_div).draggable();
+}
 
 
-// 创建selectmenu
+// 创建组件selectmenu
 $("#widgetSelector").selectmenu();
+
+// 初始化网格选择器
+$("#gridSelector").selectmenu();
+for (let i = 0; i <= widgetList.div; i++) {
+    $('#gridSelector').append($('<option>', {
+        value: "#grid" + i,
+        text: 'grid' + i
+    }));
+}
+
 
 // 按下确定按钮后会把组件直接添加到末尾
 $("#confirmButton").button().click(
@@ -118,13 +134,16 @@ $("#confirmButton").button().click(
 
         // 先获取当前选定的元素
         const widgetType = $("#widgetSelector").val();
+
+        // 获取要添加到的容器
+        let appendGrid = $("#gridSelector").val();
         
         // 根据选定元素来创建新的组件
         switch (widgetType) {
             case "按钮" :
                 widgetList.button++;
                 let button_id = "button" + widgetList.button;
-                $('#content').append('<button id=' + button_id + '> ' + $('#widgetName').val() +' </button>').button();
+                $(appendGrid).append('<button id=' + button_id + '> ' + $('#widgetName').val() +' </button>').button();
                 break;
             default: alert("非常抱歉，该组件正在开发中");
         }
