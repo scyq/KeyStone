@@ -109,7 +109,15 @@ $("#bgColorInput").autocomplete({
 // 绑定拖动网格
 for (let i = 0; i <= widgetList.div; i++){
     let bundle_div = "#grid" + i;
-    $(bundle_div).draggable();
+    $(bundle_div).draggable().resizable(
+        {
+            animate: true,
+            helper: "resizeHelper",
+            minHeight: 150,
+            minWidth: 150,
+            ghost: true
+        }
+    );
 }
 
 
