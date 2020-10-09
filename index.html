@@ -13,17 +13,16 @@
     <button type="button" id="confirmButton" onclick="doPost('http://127.0.0.1:9999/')">确定</button>
     
 
-    <div id = "reqInfo">
+    <pre id = "reqInfo">
 
-    </div>
+    </pre>
 </body>
 
 <script>
-
-    let sentence = $("#sentenceInput").val;
+    /* 获取用户输入信息 */
     function doPost(url) {
-        $.get(url, {'query': sentence, 'parseSelect': "Chinese"}, function(data){
-            console.log(data);
+        let sentence = $("#sentenceInput").val();
+        $.get(url, {'query': sentence}, function(data){
             $('#reqInfo').text(JSON.stringify(data));
         });
     }
