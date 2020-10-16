@@ -1,5 +1,9 @@
 {
     "NN" : {
-        "按钮" : "Component"
+        "按钮" : "Widget"
+    },
+
+    "Widget" : {
+        "按钮" : "Button"
     }
 }
