@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import WordsHandler from './WordsHandler';
+import Content from './Content';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -57,6 +58,7 @@ export default function App() {
       setResContent(data);
       wordsHandler.splitSpeech(data["data"]);
       console.log(wordsHandler);
+      wordsHandler.wordAnalysis();  /* 分析语义 */
     });
   };
 
@@ -97,6 +99,11 @@ export default function App() {
           <Typography component="h1" variant="h5">
             {resContent["data"]}
           </Typography>
+
+          <Content renderQueue={wordsHandler.renderQueue}>
+
+          </Content>
+          
         </form>
       </div>
     </Container>
