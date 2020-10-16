@@ -32,9 +32,11 @@ const useStyles = makeStyles((theme) => ({
 export default function App() {
   const classes = useStyles();
   
+  /* 没有用类写，这里其实是定义了两个状态和改变状态的函数 */
   const [inputContent, setInputContent] = useState("");
   const [resContent, setResContent] = useState("");
   
+  /* 当输入窗口发生改变会调用该函数 */
   const textFieldChange = (event) => {
     setInputContent(event.target.value);
   }

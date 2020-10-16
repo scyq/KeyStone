@@ -2,7 +2,7 @@ import requests
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup	# HTML解析库
 
 ''' 利用fastapi建立本地服务器 '''
 app = FastAPI()
