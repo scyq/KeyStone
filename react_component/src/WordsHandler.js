@@ -53,6 +53,19 @@ class WordsHandler {
         request.send(null);     /* 没有服务器，不发送内容 */
 
         let obj = this.getThis(); /* 进入到request后this指针会丢失，在这里重新拷贝 */
+
+        const widgetSelector = (widgetType) => {
+            let res = undefined;
+            switch (widgetType) {
+                case "Button":
+                    res = (<Button variant="contained">一个按钮</Button>);
+                    break;
+                default:
+                    res = (<h2>对不起，我们什么也没Get到</h2>);
+            }
+            return res;
+        }
+
         /* 获取到json对象后执行 */
         request.onload = function () {
             if (request.status === 200) {   /* 200就是获取成功 */
@@ -63,10 +76,13 @@ class WordsHandler {
 
                     if (jsonFile[speech]){                  /* 词库是否存在该词性 */
                         if (jsonFile[speech][word]) {       /* 词库是否存在该词汇 */ 
-                            if (jsonFile[speech][word] === "Component") {
-                                obj.renderQueue.push(
-                                    (<Button variant="contained">我可爱吗</Button>)
-                                );
+                            let wordType = jsonFile[speech][word];  /* 这个词汇是一个什么东西？ 组件？颜色？布局？ */
+                            switch(wordType) {
+                                case "Widget" :     /* 如果是组件，渲染队列中添加需要渲染的组件 */
+                                    obj.renderQueue.push(widgetSelector(jsonFile[wordType][word]));
+                                    break;
+                                default:
+                                    obj.renderQueue.push((<h1>对不起，我们什么也没Get到</h1>));
                             }
                         }
                     }
