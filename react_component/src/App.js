@@ -8,6 +8,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import WordsHandler from './WordsHandler';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,8 +34,9 @@ export default function App() {
   const classes = useStyles();
   
   /* 没有用类写，这里其实是定义了两个状态和改变状态的函数 */
-  const [inputContent, setInputContent] = useState("");
-  const [resContent, setResContent] = useState("");
+  const [inputContent, setInputContent] = useState("");                     /* 输入内容 */
+  const [resContent, setResContent] = useState("");                         /* StanFord服务器返回内容 */
+  const [wordsHandler, createWordsHandler] = useState(new WordsHandler())   /* 数据处理类的创建 */  
   
   /* 当输入窗口发生改变会调用该函数 */
   const textFieldChange = (event) => {
@@ -49,8 +51,12 @@ export default function App() {
     fetch(url + '?query=' + inputContent)
     .then(res => res.json())
     .then(data => {
-      console.log(data["data"]);
+      /* 利用正则表达式将长空格变成一个空格并分成数组，去掉头部是因为头部是一个空格 */
+      data["data"] = data["data"].replace(/\s+/g, ' ').split(' ');   
+      data["data"].shift();
       setResContent(data);
+      wordsHandler.splitSpeech(data["data"]);
+      console.log(wordsHandler);
     });
   };
 
