@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { Button } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 
 class WordsHandler {
     /*
@@ -59,6 +59,9 @@ class WordsHandler {
             switch (widgetType) {
                 case "Button":
                     res = (<Button variant="contained">一个按钮</Button>);
+                    break;
+                case "TextField":
+                    res = (<TextField id="standard-basic" label="输入点什么吧"> </TextField>);
                     break;
                 default:
                     res = (<h2>对不起，我们什么也没Get到</h2>);

@@ -1,9 +1,11 @@
 {
     "NN" : {
-        "按钮" : "Widget"
+        "按钮" : "Widget",
+        "文本框" : "Widget"
     },
 
     "Widget" : {
-        "按钮" : "Button"
+        "按钮" : "Button",
+        "文本框" : "TextField"
     }
 }
