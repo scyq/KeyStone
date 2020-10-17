@@ -37,7 +37,7 @@ export default function App() {
   /* 没有用类写，这里其实是定义了两个状态和改变状态的函数 */
   const [inputContent, setInputContent] = useState("");                     /* 输入内容 */
   const [resContent, setResContent] = useState("");                         /* StanFord服务器返回内容 */
-  const [wordsHandler, createWordsHandler] = useState(new WordsHandler())   /* 数据处理类的创建 */  
+  const [wordsHandler] = useState(new WordsHandler())   /* 数据处理类的创建 */  
   
   /* 当输入窗口发生改变会调用该函数 */
   const textFieldChange = (event) => {
@@ -47,7 +47,7 @@ export default function App() {
 
   /* 向本地端口发送get请求 */
   const nlpSearch = () => {
-    // const proxyurl = "https://cors-anywhere.herokuapp.com/"; 
+    // wordsHandler.reRender(); /* 重新渲染 */
     let url = "http://127.0.0.1:9999/"
     fetch(url + '?query=' + inputContent)
     .then(res => res.json())
@@ -100,7 +100,7 @@ export default function App() {
             {resContent["data"]}
           </Typography>
 
-          <Content renderQueue={wordsHandler.renderQueue}>
+          <Content renderQueue={wordsHandler.renderQueue} background={wordsHandler.colorStyle}>
 
           </Content>
           

@@ -6,8 +6,8 @@ class Content extends React.Component {
     render() {
         if (this.props.renderQueue !== []) {
             return (
-                <div>
-                    {this.props.renderQueue[0]}
+                <div background-color={this.props.background}>
+                    {this.props.renderQueue}
                 </div>
             );
         }
