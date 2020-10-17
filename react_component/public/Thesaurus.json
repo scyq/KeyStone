@@ -1,7 +1,15 @@
 {
     "NN" : {
         "按钮" : "Widget",
-        "文本框" : "Widget"
+        "文本框" : "Widget",
+        "白色" : "Color",
+        "黑色" : "Color",
+        "红色" : "Color",
+        "黄色" : "Color",
+        "蓝色" : "Color",
+        "绿色" : "Color",
+        "褐色" : "Color",
+        "青色" : "Color"
     },
 
     "Widget" : {

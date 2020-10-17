@@ -13,10 +13,13 @@ class WordsHandler {
         构造器
         @param
         {string} words 带有词性标注的词语，词语和词性未分割
+        {Array{React.Component}} renderQueue 渲染队列
+        {string} colorStyle 背景颜色，16进制
     */
     constructor() {
         this.words = [];
         this.renderQueue = [];
+        this.colorStyle = undefined;
     }
 
     /*
@@ -25,6 +28,14 @@ class WordsHandler {
     */
     getThis() {
         return this;
+    }
+
+    /*
+        @function reRender
+        清空renderQueue
+    */
+    reRender() {
+       this.renderQueue = [];
     }
 
     /*
@@ -83,6 +94,9 @@ class WordsHandler {
                             switch(wordType) {
                                 case "Widget" :     /* 如果是组件，渲染队列中添加需要渲染的组件 */
                                     obj.renderQueue.push(widgetSelector(jsonFile[wordType][word]));
+                                    break;
+                                case "Color" :      /* 如果是颜色，改变渲染的背景颜色 */
+                                    obj.colorStyle = jsonFile["Color"][word];
                                     break;
                                 default:
                                     obj.renderQueue.push((<h1>对不起，我们什么也没Get到</h1>));
