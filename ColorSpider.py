@@ -6,6 +6,9 @@ soup = BeautifulSoup(r.text, 'html.parser')
 colorInfo = soup.find_all('img')
 for color in colorInfo:
 	try:
-		print(color['title'])
+		colorStr = color['title']
+		colorStr = colorStr.split(',')
+		print('"'+ colorStr[0] + '"' + ' : ' + '"#' + colorStr[1] + '",')
+		#print(color['title'].replace(',', ' : ') + ',')
 	except:
 		continue
