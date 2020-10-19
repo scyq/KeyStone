@@ -35,6 +35,7 @@ export default function App() {
   const classes = useStyles();
   
   /* 没有用类写，这里其实是定义了两个状态和改变状态的函数 */
+  const [renderQueue, setRenderQueue] = useState("");
   const [inputContent, setInputContent] = useState("");                     /* 输入内容 */
   const [resContent, setResContent] = useState("");                         /* StanFord服务器返回内容 */
   const [wordsHandler] = useState(new WordsHandler())   /* 数据处理类的创建 */  
@@ -44,10 +45,8 @@ export default function App() {
     setInputContent(event.target.value);
   }
 
-
   /* 向本地端口发送get请求 */
   const nlpSearch = () => {
-    // wordsHandler.reRender(); /* 重新渲染 */
     let url = "http://127.0.0.1:9999/"
     fetch(url + '?query=' + inputContent)
     .then(res => res.json())
@@ -57,10 +56,15 @@ export default function App() {
       data["data"].shift();
       setResContent(data);
       wordsHandler.splitSpeech(data["data"]);
-      console.log(wordsHandler);
-      wordsHandler.wordAnalysis();  /* 分析语义 */
+      /* 传入回调函数，重新触发渲染 */
+      wordsHandler.wordAnalysis(setRenderQueue);  /* 分析语义 */
+
     });
   };
+
+  const clickHandler = () => {
+    nlpSearch();
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -91,7 +95,7 @@ export default function App() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={nlpSearch}
+            onClick={clickHandler}
           >
             确定
           </Button>
@@ -100,7 +104,7 @@ export default function App() {
             {resContent["data"]}
           </Typography>
 
-          <Content renderQueue={wordsHandler.renderQueue} background={wordsHandler.colorStyle}>
+          <Content renderQueue={renderQueue} background={wordsHandler.colorStyle}>
 
           </Content>
           
