@@ -55,14 +55,15 @@ class WordsHandler {
     /*
         @function wordAnalysis
         词义提取核心代码 在词库中提取对应的词语 并映射
+        @param
+        {function} callback 回调函数，当renderQueue更新完成后，会利用回调函数重新刷新主界面的组件
     */
-    wordAnalysis() {
+    wordAnalysis(callback) {
         /* 异步发送读取词库json请求 */
         let thesaurusURL = './Thesaurus.json';  /* 注意：./是指和index.html同级目录，必须放在public文件夹下 */
         let request = new XMLHttpRequest();
         request.open("get", thesaurusURL);
         request.send(null);     /* 没有服务器，不发送内容 */
-
         let obj = this.getThis(); /* 进入到request后this指针会丢失，在这里重新拷贝 */
 
         const widgetSelector = (widgetType) => {
@@ -80,7 +81,7 @@ class WordsHandler {
             return res;
         }
 
-        /* 获取到json对象后执行 */
+        /* 获取到json对象后执行, 这是一个异步方法 */
         request.onload = function () {
             if (request.status === 200) {   /* 200就是获取成功 */
                 let jsonFile = JSON.parse(request.responseText);    /* 把读到的json字符串转换为对象 */
@@ -104,6 +105,7 @@ class WordsHandler {
                         }
                     }
                 }
+                callback(obj.renderQueue);
             }
         };
     }
