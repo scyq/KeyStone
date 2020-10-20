@@ -56,9 +56,10 @@ class WordsHandler {
         @function wordAnalysis
         词义提取核心代码 在词库中提取对应的词语 并映射
         @param
-        {function} callback 回调函数，当renderQueue更新完成后，会利用回调函数重新刷新主界面的组件
+        {function} renderCallBack 回调函数，当renderQueue更新完成后，会利用回调函数重新刷新主界面的组件
+        {function} bgColorCallBack 回调函数，改变背景颜色
     */
-    wordAnalysis(callback) {
+    wordAnalysis(renderCallback, bgColorCallBack) {
         /* 异步发送读取词库json请求 */
         let thesaurusURL = './Thesaurus.json';  /* 注意：./是指和index.html同级目录，必须放在public文件夹下 */
         let request = new XMLHttpRequest();
@@ -105,7 +106,8 @@ class WordsHandler {
                         }
                     }
                 }
-                callback(obj.renderQueue);
+                renderCallback(obj.renderQueue);  /* 值改变后，回调，进行重新渲染 */
+                bgColorCallBack(obj.colorStyle);   
             }
         };
     }

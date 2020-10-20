@@ -34,11 +34,12 @@ const useStyles = makeStyles((theme) => ({
 export default function App() {
   const classes = useStyles();
   
-  /* 没有用类写，这里其实是定义了两个状态和改变状态的函数 */
-  const [renderQueue, setRenderQueue] = useState("");
+  /* 没有用类写，这里其实是定义了两个状态和改变状态的函数 */  
+  const [bgColor, setBgColor] = useState("#000000");                        /* 背景颜色，用于回调函数 */
+  const [renderQueue, setRenderQueue] = useState("");                       /* 渲染队列，用于回调函数 */
   const [inputContent, setInputContent] = useState("");                     /* 输入内容 */
   const [resContent, setResContent] = useState("");                         /* StanFord服务器返回内容 */
-  const [wordsHandler] = useState(new WordsHandler())   /* 数据处理类的创建 */  
+  const [wordsHandler] = useState(new WordsHandler())                       /* 数据处理类的创建 */  
   
   /* 当输入窗口发生改变会调用该函数 */
   const textFieldChange = (event) => {
@@ -57,8 +58,7 @@ export default function App() {
       setResContent(data);
       wordsHandler.splitSpeech(data["data"]);
       /* 传入回调函数，重新触发渲染 */
-      wordsHandler.wordAnalysis(setRenderQueue);  /* 分析语义 */
-
+      wordsHandler.wordAnalysis(setRenderQueue, setBgColor);  /* 分析语义 */
     });
   };
 
@@ -104,7 +104,7 @@ export default function App() {
             {resContent["data"]}
           </Typography>
 
-          <Content renderQueue={renderQueue} background={wordsHandler.colorStyle}>
+          <Content renderQueue={renderQueue} background={bgColor}>
 
           </Content>
           
