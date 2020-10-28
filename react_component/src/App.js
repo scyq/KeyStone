@@ -6,10 +6,14 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import WordsHandler from './WordsHandler';
 import Content from './Content';
+import {NaviBar} from './NaviBar';
+
+const BarWidth = 200;
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -23,12 +27,26 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '300%', // Fix IE 11 issue.
+    width: '150%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  NaviBar: {
+    position: 'fixed',
+    width: BarWidth,
+    left: 0,
+    top: 0,
+    height: '100vh',
+    background: 'LightGrey',
+    display: 'flex',
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }
+
 }));
 
 export default function App() {
@@ -69,6 +87,11 @@ export default function App() {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+      <div className={classes.NaviBar}>
+        <List>
+          {NaviBar}
+        </List>
+      </div>
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <SearchIcon />
