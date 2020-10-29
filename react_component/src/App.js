@@ -6,14 +6,13 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import WordsHandler from './WordsHandler';
 import Content from './Content';
-import {NaviBar} from './NaviBar';
+import NaviBar from './NaviBar';
 
-const BarWidth = 200;
+const BarWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -88,9 +87,9 @@ export default function App() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.NaviBar}>
-        <List>
-          {NaviBar}
-        </List>
+        <NaviBar>
+          
+        </NaviBar>
       </div>
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
