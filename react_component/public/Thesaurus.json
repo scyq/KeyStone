@@ -3,7 +3,9 @@
         "按钮" : "Widget",
         "文本框" : "Widget",
         "开关" : "Widget",
+        "菜单" : "Widget",
         "滑块" : "Widget",
+        "日期" : "Widget",
         "白色" : "Color",
         "黑色" : "Color",
         "红色" : "Color",
@@ -22,14 +24,20 @@
         "蓝色" : "Color",
         "绿色" : "Color",
         "褐色" : "Color",
-        "青色" : "Color"
+        "青色" : "Color",
+        "单选" : "Widget"
     },
+
+    
 
     "Widget" : {
         "按钮" : "Button",
         "文本框" : "TextField",
         "开关" : "Switch",
-        "滑块" : "Slider"
+        "滑块" : "Slider",
+        "单选" : "Radio",
+        "菜单" : "Menu",
+        "日期" : "Date"
     },
 
     "Color" : {
