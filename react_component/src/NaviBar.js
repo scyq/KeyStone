@@ -73,10 +73,10 @@ export default function NaviBar() {
     switch (step) {
       case 0:
         // 布局选项
-        return( 
+        return (
           <div>
             <RadioGroup row aria-label="可参考的布局" value={templateChoice} onChange={handleTemplateChange}>
-              <FormControlLabel value="default" control={<Radio />} label="Default" />  
+              <FormControlLabel value="default" control={<Radio />} label="Default" />
               <FormControlLabel value="album" control={<Radio />} label="Album" />
               <FormControlLabel value="blog" control={<Radio />} label="Blog" />
               <FormControlLabel value="checkout" control={<Radio />} label="Checkout" />
@@ -104,10 +104,10 @@ export default function NaviBar() {
                 label="输入您想要的风格配色"
                 name="nlpInput"
                 autoComplete="nlpInput"
-                autoFocus      
+                autoFocus
                 onChange={colorDemandChange}
               />
-    
+
               <Button
                 fullWidth
                 variant="contained"
@@ -121,14 +121,14 @@ export default function NaviBar() {
             </form>
           </div>
         );
-      
+
       default:
         return (<div></div>);
     }
   }
 
   const colorDemandChange = () => {
-  
+
   }
 
   const colorClickHandler = () => {
@@ -190,7 +190,7 @@ export default function NaviBar() {
           <Button onClick={handleReset} className={classes.button}>
             重新选择
           </Button>
-          <Button 
+          <Button
             variant="contained"
             color="primary"
             className={classes.button}

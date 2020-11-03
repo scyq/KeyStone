@@ -30,7 +30,7 @@ export default function App() {
     <Container component="main" maxWidth="xs">
       <div className={classes.NaviBar}>
         <NaviBar>
-          
+
         </NaviBar>
       </div>
 
