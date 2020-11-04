@@ -25,15 +25,25 @@ const useStyles = makeStyles((theme) => ({
 
 export default function App() {
   const classes = useStyles();
+  const [status, setStatus] = useState(0);
 
-  return (
-    <Container component="main" maxWidth="xs">
-      <div className={classes.NaviBar}>
-        <NaviBar>
+  if (status === 0) {
+    return (
+      <Container component="main" maxWidth="xs">
+        <div className={classes.NaviBar}>
+          <NaviBar setStatus={setStatus}>
+          </NaviBar>
+        </div>
 
-        </NaviBar>
+      </Container>
+    );
+  }
+  else if (status === 1) {
+    return (
+      <div>
+
       </div>
+    );
+  }
 
-    </Container>
-  );
 }

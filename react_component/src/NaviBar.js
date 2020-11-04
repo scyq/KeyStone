@@ -36,7 +36,7 @@ function getStepHint(step) {
   }
 }
 
-export default function NaviBar() {
+export default function NaviBar(props) {
 
   const [wordsHandler] = useState(new WordsHandler());
   const [activeStep, setActiveStep] = useState(0);
@@ -178,6 +178,11 @@ export default function NaviBar() {
     setTemplateChoice(event.target.value);
   }
 
+  const showClickHandler = () => {
+    console.log(props);
+    props.setStatus(1);
+  }
+
   return (
     <div className={classes.root} >
       <Stepper activeStep={activeStep} orientation="vertical">
@@ -221,6 +226,7 @@ export default function NaviBar() {
             variant="contained"
             color="primary"
             className={classes.button}
+            onClick={showClickHandler}
           >
             查看效果
           </Button>
