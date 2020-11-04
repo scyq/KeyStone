@@ -13,6 +13,6 @@ for color in colorInfo:
 			continue
 		else:
 			colorSet.add(colorStr[0])
-			print('"'+ colorStr[0] + '"' + ' : ' + '"#' + colorStr[1] + '",')
+			print('"'+ colorStr[0] + '"' + ' : ' + '"Color",')
 	except:
 		continue

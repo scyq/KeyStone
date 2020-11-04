@@ -12,6 +12,7 @@ import { useState } from 'react';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import TextField from '@material-ui/core/TextField';
+import WordsHandler from './WordsHandler';
 
 
 function getSteps() {
@@ -35,39 +36,40 @@ function getStepHint(step) {
   }
 }
 
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    left: 0,
-    background: 'White',
-  },
-  button: {
-    marginTop: theme.spacing(1),
-    marginRight: theme.spacing(1),
-  },
-  actionsContainer: {
-    marginBottom: theme.spacing(2),
-  },
-  resetContainer: {
-    padding: theme.spacing(3),
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '30%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-}));
-
 export default function NaviBar() {
-  const classes = useStyles();
+
+  const [wordsHandler] = useState(new WordsHandler());
   const [activeStep, setActiveStep] = useState(0);
   const [templateChoice, setTemplateChoice] = useState("default");
-  const [colorStyle, setColorStyle] = useState("White");
+  const [colorStyleInput, setColorStyleInput] = useState("");   /* NLP处理之后的结果，还未提取 */
+  const [colorStyle, setColorStyle] = useState("White");        /* NLP获取颜色信息后，才会修改这里 */
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      width: '100%',
+      left: 0,
+      background: colorStyle
+    },
+    button: {
+      marginTop: theme.spacing(1),
+      marginRight: theme.spacing(1),
+    },
+    actionsContainer: {
+      marginBottom: theme.spacing(2),
+    },
+    resetContainer: {
+      padding: theme.spacing(3),
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+      width: '30%', // Fix IE 11 issue.
+      marginTop: theme.spacing(1),
+    },
+  }));
   const steps = getSteps();
+  const classes = useStyles();
 
   function getStepContent(step) {
     switch (step) {
@@ -127,12 +129,37 @@ export default function NaviBar() {
     }
   }
 
-  const colorDemandChange = () => {
 
+  /* 向本地端口发送get请求 */
+  /*
+    @param bgSet 回调函数，用于更新背景颜色
+  */
+  const nlpSearch = () => {
+    let url = "http://127.0.0.1:9999/"
+    fetch(url + '?query=' + colorStyleInput)
+      .then(res => res.json())
+      .then(data => {
+        /* 利用正则表达式将长空格变成一个空格并分成数组，去掉头部是因为头部是一个空格 */
+        data["data"] = data["data"].replace(/\s+/g, ' ').split(' ');
+        data["data"].shift();
+        setColorStyleInput(data["data"]);
+        console.log(data["data"]);
+        wordsHandler.splitSpeech(data["data"]);
+        /* 传入回调函数，重新触发渲染 */
+        wordsHandler.wordAnalysis(setColorStyle);  /* 分析语义 */
+      });
+  };
+
+  const colorDemandChange = (event) => {
+    setColorStyleInput(event.target.value);
   }
 
+  /*
+    @function colorClickHandler
+    处理尝试一下后的颜色变化
+  */
   const colorClickHandler = () => {
-
+    nlpSearch();
   }
 
   const handleNext = () => {
@@ -152,7 +179,7 @@ export default function NaviBar() {
   }
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} >
       <Stepper activeStep={activeStep} orientation="vertical">
         {steps.map((label, index) => (
           <Step key={label}>
