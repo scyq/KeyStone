@@ -4,6 +4,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import NaviBar from './NaviBar';
 import Album from './template/album/Album';
+import Blog from './template/blog/Blog';
+import Checkout from './template/checkout/Checkout';
+import Dashboard from './template/dashboard/Dashboard';
+import Pricing from './template/pricing/Pricing';
+import SignIn from './template/sign-in/SignIn';
+import SignInSide from './template/sign-in-side/SignInSide';
+import SignUp from './template/sign-up/SignUp';
+import StickyFooter from './template/sticky-footer/StickyFooter';
 
 
 
@@ -65,6 +73,30 @@ export default function App() {
 
       case 1:
         return (<Album></Album>);
+
+      case 2:
+        return (<Blog></Blog>);
+
+      case 3:
+        return (<Checkout></Checkout>);
+
+      case 4:
+        return (<Dashboard></Dashboard>);
+      
+      case 5:
+        return (<Pricing></Pricing>);
+      
+      case 6:
+        return (<SignIn></SignIn>);
+      
+      case 7:
+        return (<SignInSide></SignInSide>);
+
+      case 8:
+        return (<SignUp></SignUp>);
+      
+      case 9:
+        return (<StickyFooter></StickyFooter>);
 
       default:
         return (
