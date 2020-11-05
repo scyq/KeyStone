@@ -19,7 +19,7 @@ class WordsHandler {
     constructor() {
         this.words = [];
         this.renderQueue = [];
-        this.colorStyle = undefined;
+        this.colorStyle = "White";
     }
 
     /*
@@ -35,7 +35,7 @@ class WordsHandler {
         清空renderQueue
     */
     reRender() {
-       this.renderQueue = [];
+        this.renderQueue = [];
     }
 
     /*
@@ -56,10 +56,9 @@ class WordsHandler {
         @function wordAnalysis
         词义提取核心代码 在词库中提取对应的词语 并映射
         @param
-        {function} renderCallBack 回调函数，当renderQueue更新完成后，会利用回调函数重新刷新主界面的组件
         {function} bgColorCallBack 回调函数，改变背景颜色
     */
-    wordAnalysis(renderCallback, bgColorCallBack) {
+    wordAnalysis(bgColorCallBack) {
         /* 异步发送读取词库json请求 */
         let thesaurusURL = './Thesaurus.json';  /* 注意：./是指和index.html同级目录，必须放在public文件夹下 */
         let request = new XMLHttpRequest();
@@ -88,26 +87,24 @@ class WordsHandler {
                 let jsonFile = JSON.parse(request.responseText);    /* 把读到的json字符串转换为对象 */
                 for (let wordArr of obj.words) {
                     let word = wordArr[0];      /* 词汇 */
-                    let speech = wordArr[1];    /* 词性 */
+                    // let speech = wordArr[1];    /* 词性 */
 
-                    if (jsonFile[speech]){                  /* 词库是否存在该词性 */
-                        if (jsonFile[speech][word]) {       /* 词库是否存在该词汇 */ 
-                            let wordType = jsonFile[speech][word];  /* 这个词汇是一个什么东西？ 组件？颜色？布局？ */
-                            switch(wordType) {
-                                case "Widget" :     /* 如果是组件，渲染队列中添加需要渲染的组件 */
-                                    obj.renderQueue.push(widgetSelector(jsonFile[wordType][word]));
-                                    break;
-                                case "Color" :      /* 如果是颜色，改变渲染的背景颜色 */
-                                    obj.colorStyle = jsonFile["Color"][word];
-                                    break;
-                                default:
-                                    obj.renderQueue.push((<h1>对不起，我们什么也没Get到</h1>));
-                            }
+                    if (jsonFile["Words"][word]) {           /* 词库是否存在该词 */
+                        let wordType = jsonFile["Words"][word];  /* 这个词汇是一个什么东西？ 组件？颜色？布局？ */
+                        switch (wordType) {
+                            case "Widget":     /* 如果是组件，渲染队列中添加需要渲染的组件 */
+                                obj.renderQueue.push(widgetSelector(jsonFile[wordType][word]));
+                                break;
+                            case "Color":      /* 如果是颜色，改变渲染的背景颜色 */
+                                obj.colorStyle = jsonFile["Color"][word];
+                                break;
+                            default:
+                                obj.renderQueue.push((<h1>对不起，我们什么也没Get到</h1>));
                         }
+
                     }
                 }
-                renderCallback(obj.renderQueue);  /* 值改变后，回调，进行重新渲染 */
-                bgColorCallBack(obj.colorStyle);   
+                bgColorCallBack(obj.colorStyle);
             }
         };
     }
