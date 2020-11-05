@@ -40,7 +40,7 @@ export default function NaviBar(props) {
 
   const [wordsHandler] = useState(new WordsHandler());
   const [activeStep, setActiveStep] = useState(0);
-  const [templateChoice, setTemplateChoice] = useState("default");
+  const [templateChoice, setTemplateChoice] = useState(0);
   const [colorStyleInput, setColorStyleInput] = useState("");   /* NLP处理之后的结果，还未提取 */
   const [colorStyle, setColorStyle] = useState("White");        /* NLP获取颜色信息后，才会修改这里 */
   const useStyles = makeStyles((theme) => ({
@@ -71,23 +71,28 @@ export default function NaviBar(props) {
   const steps = getSteps();
   const classes = useStyles();
 
+  /*
+    @function getStepContent
+    返回Step组件不同步渲染的内容
+  */
   function getStepContent(step) {
     switch (step) {
       case 0:
         // 布局选项
         return (
           <div>
+            {/* 注意 value的值是string 需要转类型 */}
             <RadioGroup row aria-label="可参考的布局" value={templateChoice} onChange={handleTemplateChange}>
-              <FormControlLabel value="default" control={<Radio />} label="Default" />
-              <FormControlLabel value="album" control={<Radio />} label="Album" />
-              <FormControlLabel value="blog" control={<Radio />} label="Blog" />
-              <FormControlLabel value="checkout" control={<Radio />} label="Checkout" />
-              <FormControlLabel value="dashboard" control={<Radio />} label="Dashboard" />
-              <FormControlLabel value="pricing" control={<Radio />} label="Pricing" />
-              <FormControlLabel value="sign-in" control={<Radio />} label="Sign-in" />
-              <FormControlLabel value="sign-in-side" control={<Radio />} label="Sign-in-side" />
-              <FormControlLabel value="sign-up" control={<Radio />} label="Sign-up" />
-              <FormControlLabel value="sticky-footer" control={<Radio />} label="Sticky-footer" />
+              <FormControlLabel value={0} control={<Radio />} label="Default" />
+              <FormControlLabel value={1} control={<Radio />} label="Album" />
+              <FormControlLabel value={2} control={<Radio />} label="Blog" />
+              <FormControlLabel value={3} control={<Radio />} label="Checkout" />
+              <FormControlLabel value={4} control={<Radio />} label="Dashboard" />
+              <FormControlLabel value={5} control={<Radio />} label="Pricing" />
+              <FormControlLabel value={6} control={<Radio />} label="Sign-in" />
+              <FormControlLabel value={7} control={<Radio />} label="Sign-in-side" />
+              <FormControlLabel value={8} control={<Radio />} label="Sign-up" />
+              <FormControlLabel value={9} control={<Radio />} label="Sticky-footer" />
             </RadioGroup>
           </div>
         );
@@ -175,12 +180,14 @@ export default function NaviBar(props) {
   };
 
   const handleTemplateChange = event => {
-    setTemplateChoice(event.target.value);
+    let template = parseInt(event.target.value)
+    setTemplateChoice(template);
+    props.setTemplate(template);
   }
 
   const showClickHandler = () => {
-    console.log(props);
-    props.setStatus(1);
+    props.setRenderBg(colorStyle); 
+    props.setStatus(1); /* 进行下一步 */
   }
 
   return (
