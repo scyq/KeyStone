@@ -28,10 +28,12 @@ def get_headers(query: str):
 	# 利用BeautifulSoup HTML解析器
 	soup = BeautifulSoup(r.text, 'html.parser')
 	# find_all 返回的是符合标准的列表
+	# res 是stanford NLP 分词后的结果
 	res = soup.find_all("div", class_="parserOutputMonospace")[1].get_text().replace('\n', '')
 	# print(res)
 
 	content = {'data': res}
+	print(res)
 
 	''' 允许跨域访问 '''
 	headers = {"Access-Control-Allow-Origin": "*"}
