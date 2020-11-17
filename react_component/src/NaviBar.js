@@ -13,6 +13,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import TextField from '@material-ui/core/TextField';
 import WordsHandler from './WordsHandler';
+import ColorThief from '../node_modules/colorthief/dist/color-thief'
 
 
 function getSteps() {
@@ -144,20 +145,20 @@ export default function NaviBar(props) {
     fetch(url + '?query=' + colorStyleInput)
       .then(res => res.json())
       .then(data => {
+        /* 这里data已经是二维数组，每一个元素都是长度为2的数组了 */
+        const colorThief = new ColorThief();
+        const img = new Image();
+        img.addEventListener('load', function () {
+          alert(colorThief.getColor(img));
+        });
+        img.crossOrigin = 'Anonymous';
+        img.src = "http://localhost:8000/_image_cache_/大.jpg"
 
-        /* TODO 
-          这里逻辑全部要大改。
-          原本是把每个词语直接进行本地词库搜索，现在要进行跨域访问。
-          需要我们的代理服务器，从百度搜索关键词获取图片链接，所以返回的是图片链接。
-          然后前端通过ColorThief进行取色。
-          NLP还是保留，不过同时保留图片链接信息。
-        */
-
-
+        /* 分词交给后端处理了 */
         /* 利用正则表达式将长空格变成一个空格并分成数组，去掉头部是因为头部是一个空格 */
         // data["data"] = data["data"].replace(/\s+/g, ' ').split(' ');
         // data["data"].shift();
-        
+
         setColorStyleInput(data["data"]);
         console.log(data["data"]);
         wordsHandler.splitSpeech(data["data"]);
@@ -197,7 +198,7 @@ export default function NaviBar(props) {
   }
 
   const showClickHandler = () => {
-    props.setRenderBg(colorStyle); 
+    props.setRenderBg(colorStyle);
     props.setStatus(1); /* 进行下一步 */
   }
 
