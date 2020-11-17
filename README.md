@@ -18,6 +18,7 @@
 我们已经准备好了所有的package.json，只需要clone下来，在安装node后，文件根目录下输入
 
 ```shell
+cd react_component
 npm install --dependencies
 ```
 
