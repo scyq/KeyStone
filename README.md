@@ -1,51 +1,60 @@
 # 软件界面原型自动生成器
 
-**Author: ** @scyq @ShengqiCao
+**Author:** 
+
+@scyq 
+
+@ShengqiCao
 
 **Content**
 
 - [软件界面原型自动生成器](#软件界面原型自动生成器)
-  - [Directory Tree](#directory-tree)
+  - [Files](#files)
 
 
 
-## Directory Tree
+## How to Install
+
+我们已经准备好了所有的package.json，只需要clone下来，在安装node后，文件根目录下输入
+
+```shell
+cd react_component
+npm install --dependencies
+```
+
+安装完依赖后
+
+```shell
+./run.sh
+```
+
+打开浏览器，进入
+
+```
+127.0.0.1:3000
+```
+
+
+
+## Files
 
 *Ignore the node_modules*
 
-.
-├── ColorSpider.py
-├── README.md
-├── __pycache__
-│   ├── backEnd.cpython-37.pyc
-│   └── main.cpython-37.pyc
-├── index.html
-├── main.py
-├── react_component
-│   ├── README.md
-│   ├── package-lock.json
-│   ├── package.json
-│   ├── public
-│   │   ├── Thesaurus.json
-│   │   ├── favicon.ico
-│   │   ├── index.html
-│   │   ├── logo192.png
-│   │   ├── logo512.png
-│   │   ├── manifest.json
-│   │   └── robots.txt
-│   └── src
-│       ├── App.css
-│       ├── App.js
-│       ├── App.test.js
-│       ├── NaviBar.js
-│       ├── SearchBar.js
-│       ├── WordsHandler.js
-│       ├── index.css
-│       ├── index.js
-│       ├── logo.svg
-│       ├── serviceWorker.js
-│       ├── setupTests.js
-│       └── template
-├── run.sh
-└── stanford-chinese-corenlp-2020-09-23-models.jar
+- run.sh 运行本地服务器的脚本
+
+
+
+## Framework
+
+- React
+  - Material-UI
+- fastapi
+- http.server
+
+
+
+## Algorithm
+
+- Color Thief
+  - 颜色提取算法
 
