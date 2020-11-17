@@ -42,7 +42,7 @@ export default function NaviBar(props) {
   const [wordsHandler] = useState(new WordsHandler());
   const [activeStep, setActiveStep] = useState(0);
   const [templateChoice, setTemplateChoice] = useState(0);
-  const [colorStyleInput, setColorStyleInput] = useState("");   /* NLP处理之后的结果，还未提取 */
+  const [colorStyleInput, setColorStyleInput] = useState([]);   /* NLP处理之后的结果，还未提取 */
   const [colorStyle, setColorStyle] = useState("White");        /* NLP获取颜色信息后，才会修改这里 */
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -145,21 +145,32 @@ export default function NaviBar(props) {
     fetch(url + '?query=' + colorStyleInput)
       .then(res => res.json())
       .then(data => {
-        /* 这里data已经是二维数组，每一个元素都是长度为2的数组了 */
+        /* 这里data还没有分词 */
+        setColorStyleInput(data["data"]);
         const colorThief = new ColorThief();
-        const img = new Image();
-        img.addEventListener('load', function () {
-          alert(colorThief.getColor(img));
-        });
-        img.crossOrigin = 'Anonymous';
-        img.src = "http://localhost:8000/_image_cache_/大.jpg"
+
+        const rgbToHex = (r, g, b) => '#' + [r, g, b].map(x => {
+          const hex = x.toString(16)
+          return hex.length === 1 ? '0' + hex : hex
+        }).join('');
+
+        for (let words of data["data"]) {
+          words = words.split('/');
+          const img = new Image();
+          img.addEventListener('load', function () {
+            let rgb = colorThief.getColor(img)
+            setColorStyle(rgbToHex(rgb[0], rgb[1], rgb[2]));
+          });
+          img.crossOrigin = 'Anonymous';
+          let srcPath = "http://localhost:9999/_image_cache_/" + words[0] + ".jpg";
+          img.src = srcPath;
+        }
+
 
         /* 分词交给后端处理了 */
         /* 利用正则表达式将长空格变成一个空格并分成数组，去掉头部是因为头部是一个空格 */
         // data["data"] = data["data"].replace(/\s+/g, ' ').split(' ');
         // data["data"].shift();
-
-        setColorStyleInput(data["data"]);
         console.log(data["data"]);
         wordsHandler.splitSpeech(data["data"]);
         /* 传入回调函数，重新触发渲染 */

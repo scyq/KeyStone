@@ -81,4 +81,4 @@ async def Image(imgName: str):
     path = os.path.join("./_image_cache_", imgName)
     if not os.path.exists(path):
         return {'Load' : False, 'msg': '文件不存在'}
-    return FileResponse(path)
+    return FileResponse(path, headers=headers)
