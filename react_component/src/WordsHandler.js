@@ -57,6 +57,7 @@ class WordsHandler {
         词义提取核心代码 在词库中提取对应的词语 并映射
         @param
         {function} bgColorCallBack 回调函数，改变背景颜色
+        {function} setAnalysisDone 回调函数，进行下一步
     */
     wordAnalysis(bgColorCallBack) {
         /* 异步发送读取词库json请求 */

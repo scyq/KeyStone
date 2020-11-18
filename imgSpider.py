@@ -50,7 +50,7 @@ def getImageUrl(url: str) -> str:
 
 def pullImage(word: str, url: str):
     try:
-        img = requests.get(url, timeout=15)
+        img = requests.get(url, timeout=20)
         name = './_image_cache_/' + word + '.jpg'
         with open(name, 'wb') as f:
             f.write(img.content)
