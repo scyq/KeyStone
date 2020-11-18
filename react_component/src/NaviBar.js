@@ -13,11 +13,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import TextField from '@material-ui/core/TextField';
 import WordsHandler from './WordsHandler';
-import ColorThief from '../node_modules/colorthief/dist/color-thief'
+import ColorThief from '../node_modules/colorthief/dist/color-thief';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Backdrop from '@material-ui/core/Backdrop';
 
 
 function getSteps() {
-  return ['您是否有想要的模板？', '您想要什么样的风格配色？', '您还有其他什么需求？'];
+  return ['您是否有想要的模板？', '您想要什么样的风格配色？', '根据您的输入，我们推断您喜欢以下几种配色：', '您还有其他什么需求？'];
 }
 
 /*
@@ -31,6 +33,8 @@ function getStepHint(step) {
     case 1:
       return '我喜欢低调的商务风。';
     case 2:
+      return '选择您想要的组合。';
+    case 3:
       return '您还有其他什么需求？';
     default:
       return '随便说点什么吧。'
@@ -42,8 +46,10 @@ export default function NaviBar(props) {
   const [wordsHandler] = useState(new WordsHandler());
   const [activeStep, setActiveStep] = useState(0);
   const [templateChoice, setTemplateChoice] = useState(0);
-  const [colorStyleInput, setColorStyleInput] = useState("");   /* NLP处理之后的结果，还未提取 */
+  const [colorStyleInput, setColorStyleInput] = useState([]);   /* NLP处理之后的结果，还未提取 */
   const [colorStyle, setColorStyle] = useState("White");        /* NLP获取颜色信息后，才会修改这里 */
+  const [ifStartAnalysis, setIfStartAnalysis] = useState(false);          /* 是否开始分析 */
+  const [wishColor, setWishColor] = useState([])                /* 提取用户可能期待的颜色 */
   const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
@@ -67,6 +73,10 @@ export default function NaviBar(props) {
     form: {
       width: '30%', // Fix IE 11 issue.
       marginTop: theme.spacing(1),
+    },
+    backdrop: {
+      zIndex: theme.zIndex.drawer + 1,
+      color: '#fff',
     },
   }));
   const steps = getSteps();
@@ -116,17 +126,21 @@ export default function NaviBar(props) {
                 onChange={colorDemandChange}
               />
 
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                onClick={colorClickHandler}
-              >
-                尝试一下
-              </Button>
-
             </form>
+          </div>
+        );
+
+      case 2:
+        // 猜你喜欢的颜色搭配
+        const colorBar = wishColor.map((rgb) => {
+          return(
+          <div key={rgb} style={{backgroundColor: rgb, height: '100px', width: '100px', padding: '20px'}} >
+          </div>
+          );
+        });
+        return (
+          <div>
+            {colorBar}
           </div>
         );
 
@@ -138,49 +152,79 @@ export default function NaviBar(props) {
 
   /* 向本地端口发送get请求 */
   /*
-    @param bgSet 回调函数，用于更新背景颜色
+    @param analysisDoneCallBack 回调函数，用于更新背景颜色
   */
-  const nlpSearch = () => {
+  const nlpSearch = (analysisDoneCallBack) => {
     let url = "http://127.0.0.1:9999/"
     fetch(url + '?query=' + colorStyleInput)
       .then(res => res.json())
       .then(data => {
-        /* 这里data已经是二维数组，每一个元素都是长度为2的数组了 */
+        /* 这里data还没有分词 */
+        setColorStyleInput(data["data"]);
         const colorThief = new ColorThief();
-        const img = new Image();
-        img.addEventListener('load', function () {
-          alert(colorThief.getColor(img));
-        });
-        img.crossOrigin = 'Anonymous';
-        img.src = "http://localhost:8000/_image_cache_/大.jpg"
+        const wordsCounts = data["data"].length;
+
+        /* rgb转十六进制 */
+        const rgbToHex = (r, g, b) => '#' + [r, g, b].map(x => {
+          const hex = x.toString(16)
+          return hex.length === 1 ? '0' + hex : hex
+        }).join('');
+
+        let temp = [];
+
+        for (let words of data["data"]) {
+          words = words.split('/');
+          const img = new Image();
+          img.addEventListener('load', function () {
+            let rgb = colorThief.getColor(img)
+            temp.push(rgbToHex(rgb[0], rgb[1], rgb[2]));
+            if (temp.length >= wordsCounts) {
+              analysisDoneCallBack();
+              setWishColor(temp);
+            }
+          });
+          img.crossOrigin = 'Anonymous';
+          try
+          {
+            let srcPath = "http://localhost:9999/_image_cache_/" + words[0] + ".jpg";
+            img.src = srcPath;
+          }
+          catch
+          {
+            analysisDoneCallBack();
+          }
+        }
+
 
         /* 分词交给后端处理了 */
         /* 利用正则表达式将长空格变成一个空格并分成数组，去掉头部是因为头部是一个空格 */
         // data["data"] = data["data"].replace(/\s+/g, ' ').split(' ');
         // data["data"].shift();
-
-        setColorStyleInput(data["data"]);
         console.log(data["data"]);
         wordsHandler.splitSpeech(data["data"]);
         /* 传入回调函数，重新触发渲染 */
         wordsHandler.wordAnalysis(setColorStyle);  /* 分析语义 */
       });
+
   };
 
   const colorDemandChange = (event) => {
     setColorStyleInput(event.target.value);
   }
 
-  /*
-    @function colorClickHandler
-    处理尝试一下后的颜色变化
-  */
-  const colorClickHandler = () => {
-    nlpSearch();
-  }
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  /* 如果index是颜色分析，则渲染颜色 */
+  const handleNext = (index) => {
+    if (index === 1) {
+      setIfStartAnalysis(true);
+      nlpSearch(() => {
+        setIfStartAnalysis(false);
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      });
+    }
+    else {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
   };
 
   const handleBack = () => {
@@ -224,11 +268,14 @@ export default function NaviBar(props) {
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={handleNext}
+                    onClick={() => handleNext(index)}
                     className={classes.button}
                   >
                     {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                   </Button>
+                  <Backdrop className={classes.backdrop} open={ifStartAnalysis} >
+                    <CircularProgress color="inherit" />
+                  </Backdrop>
                 </div>
               </div>
             </StepContent>
