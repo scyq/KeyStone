@@ -16,6 +16,9 @@ import SignUp from './template/sign-up/SignUp';
 import StickyFooter from './template/sticky-footer/StickyFooter';
 import { AppBar, Toolbar } from '@material-ui/core';
 
+import GridLayout from 'react-grid-layout'
+
+
 
 
 export default function App() {
@@ -60,7 +63,7 @@ export default function App() {
   if (status === 0) {
     return (
       <Container component="main" maxWidth="xs">
-        <AppBar style={{background: "#36648B"}}>
+        <AppBar style={{ background: "#36648B" }}>
           <Toolbar>
             <Typography variant="h6" color="inherit" noWrap>
               软件界面原型自动生成机
@@ -78,10 +81,21 @@ export default function App() {
   else if (status === 1) {
     switch (template) {
       case 0:
+        const layout = [
+          { i: 'naviBar', x: 0, y: 0, w: 12, h: 5, resizeHandles: ['se', 'sw']},
+          { i: 'main', x: 3, y: 5, w: 6, h: 10, resizeHandles: ['se', 'sw']},
+          { i: 'footer', x: 0, y: 20, w: 12, h: 5, resizeHandles: ['se', 'sw']},
+          { i: 'leftSider', x : 0, y: 5, w: 3, h: 10, resizeHandles: ['se', 'sw']},
+          { i: 'rightSider', x : 9, y: 5, w: 3, h: 10, resizeHandles: ['se', 'sw']},
+        ];
         return (
-          <div className={classes.Render}>
-
-          </div>
+          <GridLayout className="layout" layout={layout} cols={12} rowHeight={30} width={1200}>
+            <div key="naviBar" style={{backgroundColor: "#66CCFF"}}>NaviBar</div>
+            <div key="main" style={{backgroundColor: "Orange"}}>Main</div>
+            <div key="footer" style={{backgroundColor: "#66CCFF"}}>Footer</div>
+            <div key="leftSider" style={{backgroundColor: "#FF6666"}}>Left Sider</div>
+            <div key="rightSider" style={{backgroundColor: "#FF6666"}}>Right Sider</div>
+          </GridLayout>
         );
 
       case 1:
