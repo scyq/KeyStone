@@ -7,7 +7,7 @@ import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { RadioGroup } from '@material-ui/core';
+import { RadioGroup, Switch } from '@material-ui/core';
 import { useState } from 'react';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
@@ -89,7 +89,7 @@ export default function NaviBar(props) {
   function getStepContent(step) {
     switch (step) {
       case 0:
-        // 布局选项
+        // 模版选项
         return (
           <div>
             {/* 注意 value的值是string 需要转类型 */}
@@ -125,7 +125,6 @@ export default function NaviBar(props) {
                 autoFocus
                 onChange={colorDemandChange}
               />
-
             </form>
           </div>
         );
@@ -133,13 +132,26 @@ export default function NaviBar(props) {
       case 2:
         // 猜你喜欢的颜色搭配
         const colorBar = wishColor.map((rgb) => {
-          return(
-          <div key={rgb} style={{backgroundColor: rgb, height: '100px', width: '100px', padding: '20px'}} >
-          </div>
+          return (
+            <div key={rgb}>
+              <div style={{ backgroundColor: rgb, height: '100px', width: '100px', padding: '20px', position: "relative", marginRight: "5px" }} >
+              </div>
+              <FormControlLabel
+                value = {rgb}
+                control = {
+                <Switch
+                  color = "primary"
+                >
+                </Switch>}
+                label = {rgb}
+                labelPlacement = "start"
+              >
+              </FormControlLabel>
+            </div>
           );
         });
         return (
-          <div>
+          <div style={{ display: "flex" }}>
             {colorBar}
           </div>
         );
@@ -171,30 +183,38 @@ export default function NaviBar(props) {
         }).join('');
 
         let temp = [];
-
-        for (let words of data["data"]) {
-          words = words.split('/');
-          const img = new Image();
-          img.addEventListener('load', function () {
-            let rgb = colorThief.getColor(img)
-            temp.push(rgbToHex(rgb[0], rgb[1], rgb[2]));
-            if (temp.length >= wordsCounts) {
-              analysisDoneCallBack();
-              setWishColor(temp);
+        if (data["data"].length < 1) {
+          analysisDoneCallBack()
+          setWishColor(["#000000"]);
+        }
+        else{
+          for (let words of data["data"]) {
+            words = words.split('/');
+            const img = new Image();
+            /* 这是回调函数，当图片爬完了，就会调用 */
+            // eslint-disable-next-line
+            img.addEventListener('load', function () {
+              let rgb = colorThief.getColor(img);
+              let rgbHex = rgbToHex(rgb[0], rgb[1], rgb[2]);
+              temp.push(rgbHex);
+              if (temp.length >= wordsCounts) {
+                analysisDoneCallBack();
+                /* 去重 */
+                temp = Array.from(new Set(temp));
+                setWishColor(temp);
+              }
+            });
+            img.crossOrigin = 'Anonymous';
+            try {
+              let srcPath = "http://localhost:9999/_image_cache_/" + words[0] + ".jpg";
+              img.src = srcPath;
             }
-          });
-          img.crossOrigin = 'Anonymous';
-          try
-          {
-            let srcPath = "http://localhost:9999/_image_cache_/" + words[0] + ".jpg";
-            img.src = srcPath;
-          }
-          catch
-          {
-            analysisDoneCallBack();
+            catch
+            {
+              analysisDoneCallBack();
+            }
           }
         }
-
 
         /* 分词交给后端处理了 */
         /* 利用正则表达式将长空格变成一个空格并分成数组，去掉头部是因为头部是一个空格 */
