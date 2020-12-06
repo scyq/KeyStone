@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/Software-Interface-Prototype-Automatic-Generator/static/css/main.5ecd60fb.chunk.css",
+    "main.js": "/Software-Interface-Prototype-Automatic-Generator/static/js/main.1a0bd22e.chunk.js",
+    "main.js.map": "/Software-Interface-Prototype-Automatic-Generator/static/js/main.1a0bd22e.chunk.js.map",
+    "runtime-main.js": "/Software-Interface-Prototype-Automatic-Generator/static/js/runtime-main.92bdfd00.js",
+    "runtime-main.js.map": "/Software-Interface-Prototype-Automatic-Generator/static/js/runtime-main.92bdfd00.js.map",
+    "static/js/2.d8b9f9d7.chunk.js": "/Software-Interface-Prototype-Automatic-Generator/static/js/2.d8b9f9d7.chunk.js",
+    "static/js/2.d8b9f9d7.chunk.js.map": "/Software-Interface-Prototype-Automatic-Generator/static/js/2.d8b9f9d7.chunk.js.map",
+    "index.html": "/Software-Interface-Prototype-Automatic-Generator/index.html",
+    "precache-manifest.ea92f18d9386f79ada2e123ac390ee30.js": "/Software-Interface-Prototype-Automatic-Generator/precache-manifest.ea92f18d9386f79ada2e123ac390ee30.js",
+    "service-worker.js": "/Software-Interface-Prototype-Automatic-Generator/service-worker.js",
+    "static/css/main.5ecd60fb.chunk.css.map": "/Software-Interface-Prototype-Automatic-Generator/static/css/main.5ecd60fb.chunk.css.map",
+    "static/js/2.d8b9f9d7.chunk.js.LICENSE.txt": "/Software-Interface-Prototype-Automatic-Generator/static/js/2.d8b9f9d7.chunk.js.LICENSE.txt",
+    "static/media/blog-post.1.md": "/Software-Interface-Prototype-Automatic-Generator/static/media/blog-post.1.f3a53693.md",
+    "static/media/blog-post.2.md": "/Software-Interface-Prototype-Automatic-Generator/static/media/blog-post.2.99cbba3b.md",
+    "static/media/blog-post.3.md": "/Software-Interface-Prototype-Automatic-Generator/static/media/blog-post.3.8d6e276b.md"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.92bdfd00.js",
+    "static/js/2.d8b9f9d7.chunk.js",
+    "static/css/main.5ecd60fb.chunk.css",
+    "static/js/main.1a0bd22e.chunk.js"
+  ]
+}
