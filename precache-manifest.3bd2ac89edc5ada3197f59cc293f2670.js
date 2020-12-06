@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0c066d88c2e3097bca1af8202ede9281",
+    "revision": "9596e272fc3688c03651a43ed14a1ea5",
     "url": "/Software-Interface-Prototype-Automatic-Generator/index.html"
   },
   {
-    "revision": "ad55e45367e957f2f6eb",
+    "revision": "df5f40fea008c35c5e38",
     "url": "/Software-Interface-Prototype-Automatic-Generator/static/css/2.c084be02.chunk.css"
   },
   {
-    "revision": "53eb951c588bc08a6c8f",
+    "revision": "b67fedfb18e6c6219b6a",
     "url": "/Software-Interface-Prototype-Automatic-Generator/static/css/main.5ecd60fb.chunk.css"
   },
   {
-    "revision": "ad55e45367e957f2f6eb",
-    "url": "/Software-Interface-Prototype-Automatic-Generator/static/js/2.46dbb722.chunk.js"
+    "revision": "df5f40fea008c35c5e38",
+    "url": "/Software-Interface-Prototype-Automatic-Generator/static/js/2.32e7667f.chunk.js"
   },
   {
     "revision": "e4d980926fadc05888ff1db78303136f",
-    "url": "/Software-Interface-Prototype-Automatic-Generator/static/js/2.46dbb722.chunk.js.LICENSE.txt"
+    "url": "/Software-Interface-Prototype-Automatic-Generator/static/js/2.32e7667f.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "53eb951c588bc08a6c8f",
-    "url": "/Software-Interface-Prototype-Automatic-Generator/static/js/main.fad20b1d.chunk.js"
+    "revision": "b67fedfb18e6c6219b6a",
+    "url": "/Software-Interface-Prototype-Automatic-Generator/static/js/main.19ccad54.chunk.js"
   },
   {
     "revision": "06d620f78fb0f55b7e2e",
