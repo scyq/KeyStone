@@ -1,23 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e44eba6abfbe3cdba1c8879889d940fe",
+    "revision": "0c066d88c2e3097bca1af8202ede9281",
     "url": "/Software-Interface-Prototype-Automatic-Generator/index.html"
   },
   {
-    "revision": "8d0b942263b4c14e33dd",
+    "revision": "ad55e45367e957f2f6eb",
+    "url": "/Software-Interface-Prototype-Automatic-Generator/static/css/2.c084be02.chunk.css"
+  },
+  {
+    "revision": "53eb951c588bc08a6c8f",
     "url": "/Software-Interface-Prototype-Automatic-Generator/static/css/main.5ecd60fb.chunk.css"
   },
   {
-    "revision": "dce131702c896d44edc1",
-    "url": "/Software-Interface-Prototype-Automatic-Generator/static/js/2.d8b9f9d7.chunk.js"
+    "revision": "ad55e45367e957f2f6eb",
+    "url": "/Software-Interface-Prototype-Automatic-Generator/static/js/2.46dbb722.chunk.js"
   },
   {
     "revision": "e4d980926fadc05888ff1db78303136f",
-    "url": "/Software-Interface-Prototype-Automatic-Generator/static/js/2.d8b9f9d7.chunk.js.LICENSE.txt"
+    "url": "/Software-Interface-Prototype-Automatic-Generator/static/js/2.46dbb722.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "8d0b942263b4c14e33dd",
-    "url": "/Software-Interface-Prototype-Automatic-Generator/static/js/main.1a0bd22e.chunk.js"
+    "revision": "53eb951c588bc08a6c8f",
+    "url": "/Software-Interface-Prototype-Automatic-Generator/static/js/main.fad20b1d.chunk.js"
   },
   {
     "revision": "06d620f78fb0f55b7e2e",
