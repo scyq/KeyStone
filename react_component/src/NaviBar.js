@@ -19,7 +19,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 
 
 function getSteps() {
-  return ['您是否有想要的模板？', '您想要什么样的风格配色？', '根据您的输入，我们推断您喜欢以下几种配色：', '您还有其他什么需求？'];
+  return ['您的应用场景是什么？', '您想要什么样的风格配色？', '根据您的输入，我们推断您喜欢以下几种配色：', '您还有其他什么需求？'];
 }
 
 /*
@@ -29,7 +29,7 @@ function getSteps() {
 function getStepHint(step) {
   switch (step) {
     case 0:
-      return '我想要一个纵向布局的登陆界面。';
+      return '暂不支持自定义功能实现。';
     case 1:
       return '我喜欢低调的商务风。';
     case 2:
@@ -46,10 +46,11 @@ export default function NaviBar(props) {
   const [wordsHandler] = useState(new WordsHandler());
   const [activeStep, setActiveStep] = useState(0);
   const [templateChoice, setTemplateChoice] = useState(0);
-  const [colorStyleInput, setColorStyleInput] = useState([]);   /* NLP处理之后的结果，还未提取 */
-  const [colorStyle, setColorStyle] = useState("White");        /* NLP获取颜色信息后，才会修改这里 */
-  const [ifStartAnalysis, setIfStartAnalysis] = useState(false);          /* 是否开始分析 */
-  const [wishColor, setWishColor] = useState([])                /* 提取用户可能期待的颜色 */
+  const [colorStyleInput, setColorStyleInput] = useState([]);     /* NLP处理之后的结果，还未提取 */
+  const [colorStyle, setColorStyle] = useState("White");          /* NLP获取颜色信息后，才会修改这里 */
+  const [ifStartAnalysis, setIfStartAnalysis] = useState(false);  /* 是否开始分析 */
+  const [wishColor, setWishColor] = useState([]);                 /* 提取用户可能期待的颜色，这个不是最终的颜色 */
+  const [appliedColor, setApplyColor] = useState([]);             /* 最终应用的颜色 */
   const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
@@ -94,16 +95,16 @@ export default function NaviBar(props) {
           <div>
             {/* 注意 value的值是string 需要转类型 */}
             <RadioGroup row aria-label="可参考的布局" value={templateChoice} onChange={handleTemplateChange}>
-              <FormControlLabel value={0} control={<Radio />} label="Default" />
-              <FormControlLabel value={1} control={<Radio />} label="Album" />
-              <FormControlLabel value={2} control={<Radio />} label="Blog" />
-              <FormControlLabel value={3} control={<Radio />} label="Checkout" />
-              <FormControlLabel value={4} control={<Radio />} label="Dashboard" />
-              <FormControlLabel value={5} control={<Radio />} label="Pricing" />
-              <FormControlLabel value={6} control={<Radio />} label="Sign-in" />
-              <FormControlLabel value={7} control={<Radio />} label="Sign-in-side" />
-              <FormControlLabel value={8} control={<Radio />} label="Sign-up" />
-              <FormControlLabel value={9} control={<Radio />} label="Sticky-footer" />
+              <FormControlLabel value={0} control={<Radio />} label="设计模式" />
+              <FormControlLabel value={1} control={<Radio />} label="相簿" />
+              <FormControlLabel value={2} control={<Radio />} label="博客" />
+              <FormControlLabel value={3} control={<Radio />} label="订单页" />
+              <FormControlLabel value={4} control={<Radio />} label="仪表盘" />
+              <FormControlLabel value={5} control={<Radio />} label="收银台" />
+              <FormControlLabel value={6} control={<Radio />} label="登陆界面" />
+              <FormControlLabel value={7} control={<Radio />} label="带侧页的登陆界面" />
+              <FormControlLabel value={8} control={<Radio />} label="注册界面" />
+              <FormControlLabel value={9} control={<Radio />} label="带固定页尾的页面" />
             </RadioGroup>
           </div>
         );
@@ -141,6 +142,7 @@ export default function NaviBar(props) {
                 control = {
                 <Switch
                   color = "primary"
+                  label = {rgb}
                 >
                 </Switch>}
                 label = {rgb}
@@ -167,6 +169,11 @@ export default function NaviBar(props) {
     @param analysisDoneCallBack 回调函数，用于更新背景颜色
   */
   const nlpSearch = (analysisDoneCallBack) => {
+    if (colorStyleInput.length <= 0) {
+      analysisDoneCallBack();
+      setWishColor(["#ffffff"]);
+      return;
+    }
     let url = "http://127.0.0.1:9999/"
     fetch(url + '?query=' + colorStyleInput)
       .then(res => res.json())
@@ -185,7 +192,7 @@ export default function NaviBar(props) {
         let temp = [];
         if (data["data"].length < 1) {
           analysisDoneCallBack()
-          setWishColor(["#000000"]);
+          setWishColor(["#ffffff"]);
         }
         else{
           for (let words of data["data"]) {
