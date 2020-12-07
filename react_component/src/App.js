@@ -14,9 +14,7 @@ import SignIn from './template/sign-in/SignIn';
 import SignInSide from './template/sign-in-side/SignInSide';
 import SignUp from './template/sign-up/SignUp';
 import StickyFooter from './template/sticky-footer/StickyFooter';
-import { AppBar, Button, Divider, Drawer, IconButton, Link, Toolbar } from '@material-ui/core';
-import SaveIcon from '@material-ui/icons/Save';
-import CloseIcon from '@material-ui/icons/Close';
+import { AppBar, Divider, Drawer, IconButton, Link, Toolbar } from '@material-ui/core';
 import GridLayout from 'react-grid-layout';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -33,6 +31,7 @@ import ColorizeIcon from '@material-ui/icons/Colorize';
 import Box from '@material-ui/core/Box';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import Skeleton from '@material-ui/lab/Skeleton';
+import ToolBar from './ToolBar';
 
 
 
@@ -185,6 +184,7 @@ export default function App() {
                 </Skeleton>
               </ListItem>
 
+              <Divider />
 
               <ListItem key={'github'}>
                 <ListItemIcon>
@@ -213,33 +213,7 @@ export default function App() {
         ];
         return (
           <div>
-            <AppBar position="sticky">
-              <Toolbar>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  size="large"
-                  className={classes.button}
-                  startIcon={<SaveIcon />}
-                >
-                  Save
-                </Button>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  size="large"
-                  className={classes.button}
-                  startIcon={<CloseIcon />}
-                  onClick={
-                    () => {
-                      setStatus(0);
-                    }
-                  }
-                >
-                  Back
-                </Button>
-              </Toolbar>
-            </AppBar>
+            <ToolBar setStatus={setStatus}></ToolBar>
             <GridLayout className="layout" layout={layout} cols={12} rowHeight={30} width={1200}>
               <div key="naviBar" style={{ backgroundColor: "#66CCFF" }}>NaviBar</div>
               <div key="main" style={{ backgroundColor: "Orange" }}>Main</div>
@@ -253,6 +227,7 @@ export default function App() {
       case 1:
         return (
           <div className={classes.templateRender}>
+            <ToolBar setStatus={setStatus}></ToolBar>
             <Album>
 
             </Album>
@@ -262,6 +237,7 @@ export default function App() {
       case 2:
         return (
           <div className={classes.templateRender}>
+            <ToolBar setStatus={setStatus}></ToolBar>
             <Blog>
 
             </Blog>
@@ -271,6 +247,7 @@ export default function App() {
       case 3:
         return (
           <div className={classes.templateRender}>
+            <ToolBar setStatus={setStatus}></ToolBar>
             <Checkout>
 
             </Checkout>
@@ -280,6 +257,7 @@ export default function App() {
       case 4:
         return (
           <div className={classes.templateRender}>
+            <ToolBar setStatus={setStatus}></ToolBar>
             <Dashboard>
 
             </Dashboard>
@@ -289,6 +267,7 @@ export default function App() {
       case 5:
         return (
           <div className={classes.templateRender}>
+            <ToolBar setStatus={setStatus}></ToolBar>
             <Pricing>
 
             </Pricing>
@@ -298,6 +277,7 @@ export default function App() {
       case 6:
         return (
           <div className={classes.templateRender}>
+            <ToolBar setStatus={setStatus}></ToolBar>
             <SignIn>
 
             </SignIn>
@@ -307,6 +287,7 @@ export default function App() {
       case 7:
         return (
           <div className={classes.templateRender}>
+            <ToolBar setStatus={setStatus}></ToolBar>
             <SignInSide>
 
             </SignInSide>
@@ -316,6 +297,7 @@ export default function App() {
       case 8:
         return (
           <div className={classes.templateRender}>
+            <ToolBar setStatus={setStatus}></ToolBar>
             <SignUp>
 
             </SignUp>
@@ -325,6 +307,7 @@ export default function App() {
       case 9:
         return (
           <div className={classes.templateRender}>
+            <ToolBar setStatus={setStatus}></ToolBar>
             <StickyFooter>
 
             </StickyFooter>
@@ -333,6 +316,7 @@ export default function App() {
 
       default:
         return (
+          
           <div className={classes.Render}>
 
           </div>
