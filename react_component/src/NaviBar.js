@@ -18,8 +18,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Backdrop from '@material-ui/core/Backdrop';
 
 
+const hostURL = "http://127.0.0.1:9999/";
+
 function getSteps() {
-  return ['您的应用场景是什么？', '您想要什么样的风格配色？', '根据您的输入，我们推断您喜欢以下几种配色：', '您还有其他什么需求？'];
+  return ['请输入您主要的应用场景', '您想要什么样的风格配色？', '根据您的输入，我们推断您喜欢以下几种配色：', '您还有其他什么需求？'];
 }
 
 /*
@@ -29,13 +31,13 @@ function getSteps() {
 function getStepHint(step) {
   switch (step) {
     case 0:
-      return '暂不支持自定义功能实现。';
+      return '只有自主设计模式支持输入，尝试输入"我想要一个放新闻的页面"';
     case 1:
-      return '我喜欢低调的商务风。';
+      return '"我喜欢低调的商务风。"';
     case 2:
       return '选择您想要的组合。';
     case 3:
-      return '您还有其他什么需求？';
+      return '例如您不喜欢我们给您预设的布局？';
     default:
       return '随便说点什么吧。'
   }
@@ -46,16 +48,21 @@ export default function NaviBar(props) {
   const [wordsHandler] = useState(new WordsHandler());
   const [activeStep, setActiveStep] = useState(0);
   const [templateChoice, setTemplateChoice] = useState(0);
-  const [colorStyleInput, setColorStyleInput] = useState([]);     /* NLP处理之后的结果，还未提取 */
-  const [colorStyle, setColorStyle] = useState("White");          /* NLP获取颜色信息后，才会修改这里 */
+
+  const [funcInput, setFuncInput] = useState("");                 /* 更改用户功能需求输入 */
+
+  const [colorStyleInput, setColorStyleInput] = useState("");     /* 获取用户对颜色需求的输入 */
+
   const [ifStartAnalysis, setIfStartAnalysis] = useState(false);  /* 是否开始分析 */
+
   const [wishColor, setWishColor] = useState([]);                 /* 提取用户可能期待的颜色，这个不是最终的颜色 */
-  const [appliedColor, setApplyColor] = useState([]);             /* 最终应用的颜色 */
+  const [appliedColor, setApplyColor] = useState(["White"]);             /* 最终应用的颜色，依赖于用户的选择 */
+
   const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
       left: 0,
-      background: colorStyle
+      background: appliedColor
     },
     button: {
       marginTop: theme.spacing(1),
@@ -83,6 +90,24 @@ export default function NaviBar(props) {
   const steps = getSteps();
   const classes = useStyles();
 
+
+  /* 获取用户对功能需求的输入 */
+  const funcDemandChange = (event) => {
+    setFuncInput(event.target.value);
+  }
+
+  /* 获取用户对颜色的输入 */
+  const colorDemandChange = (event) => {
+    setColorStyleInput(event.target.value);
+  }
+
+  /* 处理用户模版的选择 */
+  const handleTemplateChange = event => {
+    let template = parseInt(event.target.value)
+    setTemplateChoice(template);
+    props.setTemplate(template);
+  }
+
   /*
     @function getStepContent
     返回Step组件不同步渲染的内容
@@ -95,7 +120,7 @@ export default function NaviBar(props) {
           <div>
             {/* 注意 value的值是string 需要转类型 */}
             <RadioGroup row aria-label="可参考的布局" value={templateChoice} onChange={handleTemplateChange}>
-              <FormControlLabel value={0} control={<Radio />} label="设计模式" />
+              <FormControlLabel value={0} control={<Radio />} label="自主设计模式" />
               <FormControlLabel value={1} control={<Radio />} label="相簿" />
               <FormControlLabel value={2} control={<Radio />} label="博客" />
               <FormControlLabel value={3} control={<Radio />} label="订单页" />
@@ -106,6 +131,21 @@ export default function NaviBar(props) {
               <FormControlLabel value={8} control={<Radio />} label="注册界面" />
               <FormControlLabel value={9} control={<Radio />} label="带固定页尾的页面" />
             </RadioGroup>
+            <form className={classes.form} noValidate>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="funcInput"
+                label="输入您的主要应用场景"
+                name="funcInput"
+                autoComplete="funcInput"
+                autoFocus
+                onChange={funcDemandChange}
+                disabled={!(templateChoice === 0)}
+              />
+            </form>
           </div>
         );
 
@@ -119,10 +159,10 @@ export default function NaviBar(props) {
                 margin="normal"
                 required
                 fullWidth
-                id="nlpInput"
+                id="colorInput"
                 label="输入您想要的风格配色"
-                name="nlpInput"
-                autoComplete="nlpInput"
+                name="colorInput"
+                autoComplete="colorInput"
                 autoFocus
                 onChange={colorDemandChange}
               />
@@ -135,18 +175,26 @@ export default function NaviBar(props) {
         const colorBar = wishColor.map((rgb) => {
           return (
             <div key={rgb}>
-              <div style={{ backgroundColor: rgb, height: '100px', width: '100px', padding: '20px', position: "relative", marginRight: "5px" }} >
+              <div style={{
+                backgroundColor: rgb,
+                height: '100px',
+                width: '100px',
+                padding: '20px',
+                position: "relative",
+                marginRight: "5px",
+                borderStyle: "solid"
+              }} >
               </div>
               <FormControlLabel
-                value = {rgb}
-                control = {
-                <Switch
-                  color = "primary"
-                  label = {rgb}
-                >
-                </Switch>}
-                label = {rgb}
-                labelPlacement = "start"
+                value={rgb}
+                control={
+                  <Switch
+                    color="primary"
+                    label={rgb}
+                  >
+                  </Switch>}
+                label={rgb}
+                labelPlacement="start"
               >
               </FormControlLabel>
             </div>
@@ -158,6 +206,27 @@ export default function NaviBar(props) {
           </div>
         );
 
+      case 3:
+        // 其他需求声明
+        return (
+          <div>
+            <form className={classes.form} noValidate>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="otherDemand"
+                label="您其他的需求"
+                name="otherDemand"
+                autoComplete="otherDemand"
+                autoFocus
+                onChange={() => {}}
+              />
+            </form>
+          </div>
+        );
+
       default:
         return (<div></div>);
     }
@@ -166,19 +235,38 @@ export default function NaviBar(props) {
 
   /* 向本地端口发送get请求 */
   /*
+    @function nlpSearchFunc 分析用户可能想要的功能，确定原始的布局、导航
     @param analysisDoneCallBack 回调函数，用于更新背景颜色
   */
-  const nlpSearch = (analysisDoneCallBack) => {
+  const nlpSearchFunc = (analysisDoneCallBack) => {
+    if (funcInput.length <= 0) {
+      analysisDoneCallBack();
+      /* TODO 更改需求 */
+      return;
+    }
+    fetch(hostURL + '?query=' + funcInput)
+      .then(res => res.json())
+      .then(data => {
+        let funcData = data["data"];
+        /* TODO 处理功能分词 */
+      });
+  }
+
+  /* 向本地端口发送get请求 */
+  /*
+    @function nlpSearchColor 分析颜色并展示用户可能喜欢的颜色
+    @param analysisDoneCallBack 回调函数，用于更新背景颜色
+  */
+  const nlpSearchColor = (analysisDoneCallBack) => {
     if (colorStyleInput.length <= 0) {
       analysisDoneCallBack();
       setWishColor(["#ffffff"]);
       return;
     }
-    let url = "http://127.0.0.1:9999/"
-    fetch(url + '?query=' + colorStyleInput)
+    fetch(hostURL + '?query=' + colorStyleInput)
       .then(res => res.json())
       .then(data => {
-        /* 这里data还没有分词 */
+        /* 这里data是nlp处理完后还没有分词的数组 */
         setColorStyleInput(data["data"]);
         const colorThief = new ColorThief();
         const wordsCounts = data["data"].length;
@@ -194,7 +282,7 @@ export default function NaviBar(props) {
           analysisDoneCallBack()
           setWishColor(["#ffffff"]);
         }
-        else{
+        else {
           for (let words of data["data"]) {
             words = words.split('/');
             const img = new Image();
@@ -230,21 +318,24 @@ export default function NaviBar(props) {
         console.log(data["data"]);
         wordsHandler.splitSpeech(data["data"]);
         /* 传入回调函数，重新触发渲染 */
-        wordsHandler.wordAnalysis(setColorStyle);  /* 分析语义 */
+        wordsHandler.wordAnalysis(setApplyColor);  /* 分析语义 */
       });
 
   };
 
-  const colorDemandChange = (event) => {
-    setColorStyleInput(event.target.value);
-  }
-
 
   /* 如果index是颜色分析，则渲染颜色 */
   const handleNext = (index) => {
-    if (index === 1) {
+    if (index === 0 && templateChoice === 0) {
       setIfStartAnalysis(true);
-      nlpSearch(() => {
+      nlpSearchFunc(() => {
+        setIfStartAnalysis(false);
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      });
+    }
+    else if (index === 1) {
+      setIfStartAnalysis(true);
+      nlpSearchColor(() => {
         setIfStartAnalysis(false);
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       });
@@ -262,15 +353,10 @@ export default function NaviBar(props) {
     setActiveStep(0);
   };
 
-  const handleTemplateChange = event => {
-    let template = parseInt(event.target.value)
-    setTemplateChoice(template);
-    props.setTemplate(template);
-  }
-
   const showClickHandler = () => {
-    props.setRenderBg(colorStyle);
-    props.setStatus(1); /* 进行下一步 */
+    props.setRenderBg(appliedColor[0]);
+    /* 进行下一步，改变App的渲染状态 */
+    props.setStatus(1);
   }
 
   return (
