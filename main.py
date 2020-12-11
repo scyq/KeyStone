@@ -11,8 +11,45 @@ from fastapi.responses import FileResponse
 app = FastAPI()
 
 
+@app.get("/func")
+def get_headers(query: str):
+    postData = {
+        "defaultQuery.0": "هذا الرجل هو سعيد.",
+        "defaultQuery.1": "猴子喜欢吃香蕉。",
+        "defaultQuery.2": "My dog also likes eating sausage.",
+        "defaultQuery.3": "Au fond, les choses sont assez simples.",
+        "defaultQuery.4": "El reino canta muy bien.",
+        "chineseParseButton": "剖析 (Parse)",
+        "query": query,
+        "parserSelect": "Chinese",
+        "parse": "剖析 (Parse)"
+    }
 
-@app.get("/")
+    ''' 利用requests向stanford NLP发送POST请求 '''
+    r = requests.post(
+        'http://nlp.stanford.edu:8080/parser/index.jsp', data=postData)
+
+    ''' 利用BeautifulSoup HTML解析器 '''
+    soup = BeautifulSoup(r.text, 'html.parser')
+
+    ''' 
+		find_all 返回的是符合标准的列表
+    	res 是stanford NLP 分词后的结果 
+	'''
+    res = soup.find_all("div", class_="parserOutputMonospace")[
+        1].get_text().replace('\n', '')
+
+    res = res.split()   # 去除长空格
+
+    print(res)
+
+    ''' 允许跨域访问 '''
+    headers = {"Access-Control-Allow-Origin": "*"}
+    return JSONResponse(content=res, headers=headers)
+
+
+
+@app.get("/img")
 def get_headers(query: str):
     postData = {
         "defaultQuery.0": "هذا الرجل هو سعيد.",
@@ -65,13 +102,9 @@ def get_headers(query: str):
             pullImage(keyword, getImageUrl(url))
             cachedList.append(keyword)
 
-    content = {
-        'data': res
-    }
-
     ''' 允许跨域访问 '''
     headers = {"Access-Control-Allow-Origin": "*"}
-    return JSONResponse(content=content, headers=headers)
+    return JSONResponse(content=res, headers=headers)
 
 
 @app.get("/_image_cache_/{imgName}")

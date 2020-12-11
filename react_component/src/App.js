@@ -18,6 +18,7 @@ import GridLayout from 'react-grid-layout';
 import MenuIcon from '@material-ui/icons/Menu';
 import ToolBar from './ToolBar';
 import Preview from './Preview';
+import GitHubIcon from '@material-ui/icons/GitHub';
 
 
 
@@ -31,6 +32,13 @@ export default function App() {
     0 - Default
   */
   const [template, setTemplate] = useState(0);
+
+  const [customFunction, setFunction] = useState("您还未输入");
+
+  const [design, setDesign] = useState({
+    "layout" : [],
+    "navigate": []
+  });
 
   const useStyles = makeStyles((theme) => ({
     NaviBar: {
@@ -73,7 +81,13 @@ export default function App() {
             <Typography variant="h6" color="inherit" noWrap className={classes.BarTitle}>
               软件界面原型自动生成机
             </Typography>
-            <IconButton edge="start" color="inherit" aria-label="menu" onClick={() => {
+            <IconButton color="inherit" onClick={() => {
+              const w = window.open('about:blank');
+              w.location.href = 'https://github.com/scyq/Software-Interface-Prototype-Automatic-Generator';
+            }}>
+              <GitHubIcon />
+            </IconButton>
+            <IconButton edge="end" color="inherit" aria-label="menu" onClick={() => {
               setDrawer(true);
             }}
             >
@@ -87,12 +101,17 @@ export default function App() {
             setRenderBg={setRenderBg} 
             setTemplate={setTemplate}
             setDrawer={setDrawer}
+            setDesign={setDesign}
+            setFunction={setFunction}
             >
           </NaviBar>
         </div>
         <Preview
           open={drawerOpen}
+          func = {customFunction}
+          design={design}
           setDrawer={setDrawer} 
+          customFunction={customFunction}
         >
         </Preview>
       </Container>

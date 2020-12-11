@@ -5,7 +5,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
-import GitHubIcon from '@material-ui/icons/GitHub';
 import FiberNewIcon from '@material-ui/icons/FiberNew';
 import BorderAllIcon from '@material-ui/icons/BorderAll';
 import CallSplitIcon from '@material-ui/icons/CallSplit';
@@ -53,7 +52,7 @@ export default function Preview(props) {
                         </ListItemIcon>
                         <ListItemText primary={'需求功能'}>
                         </ListItemText>
-                        <ListItemText primary={'个人博客'}>
+                        <ListItemText primary={props.customFunction}>
                         </ListItemText>
                     </ListItem>
 
@@ -63,7 +62,7 @@ export default function Preview(props) {
                         </ListItemIcon>
                         <ListItemText primary={'采取的布局'}>
                         </ListItemText>
-                        <ListItemText primary={'中心舞台'}>
+                        <ListItemText primary={props.design["layout"][0]}>
                         </ListItemText>
                     </ListItem>
 
@@ -73,11 +72,11 @@ export default function Preview(props) {
                         </ListItemIcon>
                         <ListItemText primary={'导航模式'}>
                         </ListItemText>
-                        <ListItemText primary={'金字塔模式'}>
+                        <ListItemText primary={props.design["navigate"][0]}>
                         </ListItemText>
                     </ListItem>
 
-                    <ListItem button key={'color'}>
+                    <ListItem button key={'colorPrimary'}>
                         <ListItemIcon>
                             <ColorizeIcon />
                         </ListItemIcon>
@@ -87,7 +86,7 @@ export default function Preview(props) {
                         </Box>
                     </ListItem>
 
-                    <ListItem button key={'color'}>
+                    <ListItem button key={'colorSecondary'}>
                         <ListItemIcon>
                             <ColorizeIcon />
                         </ListItemIcon>
@@ -105,20 +104,6 @@ export default function Preview(props) {
                         </ListItemText>
                         <Skeleton animation="wave" width={40} height={40}>
                         </Skeleton>
-                    </ListItem>
-
-                    <Divider />
-
-                    <ListItem key={'github'}>
-                        <ListItemIcon>
-                            <GitHubIcon />
-                        </ListItemIcon>
-                        <a href="https://github.com/scyq/Software-Interface-Prototype-Automatic-Generator"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            View On GitHub
-                </a>
                     </ListItem>
 
                 </List>

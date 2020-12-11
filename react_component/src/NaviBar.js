@@ -96,6 +96,7 @@ export default function NaviBar(props) {
   /* 获取用户对功能需求的输入 */
   const funcDemandChange = (event) => {
     setFuncInput(event.target.value);
+    props.setFunction(event.target.value);
   }
 
   /* 获取用户对颜色的输入 */
@@ -257,13 +258,14 @@ export default function NaviBar(props) {
       analysisDoneCallBack();
       return;
     }
-    
-    fetch(hostURL + '?query=' + funcInput)
+
+    fetch(hostURL + 'func?query=' + funcInput)
       .then(res => res.json())
       .then(data => {
-        let funcData = splitSpeech(data["data"]);
+        let funcData = splitSpeech(data);
         let AnalysisInfo = wordsHandler.Analysis(funcData, 0);
-        console.log(AnalysisInfo);
+        props.setDesign(AnalysisInfo);
+        analysisDoneCallBack();
       });
   }
 
@@ -278,13 +280,13 @@ export default function NaviBar(props) {
       setWishColor(["#ffffff"]);
       return;
     }
-    fetch(hostURL + '?query=' + colorStyleInput)
+    fetch(hostURL + 'img?query=' + colorStyleInput)
       .then(res => res.json())
       .then(data => {
         /* 这里data是nlp处理完后还没有分词的数组 */
-        setColorStyleInput(data["data"]);
+        setColorStyleInput(data);
         const colorThief = new ColorThief();
-        const wordsCounts = data["data"].length;
+        const wordsCounts = data.length;
 
         /* rgb转十六进制 */
         const rgbToHex = (r, g, b) => '#' + [r, g, b].map(x => {
@@ -293,12 +295,12 @@ export default function NaviBar(props) {
         }).join('');
 
         let temp = [];
-        if (data["data"].length < 1) {
+        if (data.length < 1) {
           analysisDoneCallBack()
           setWishColor(["#ffffff"]);
         }
         else {
-          for (let words of data["data"]) {
+          for (let words of data) {
             words = words.split('/');
             const img = new Image();
             /* 这是回调函数，当图片爬完了，就会调用 */
