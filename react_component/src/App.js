@@ -24,7 +24,7 @@ import Preview from './Preview';
 export default function App() {
   const [status, setStatus] = useState(0);
   const [renderBg, setRenderBg] = useState("White");
-  const [drawerOpen, setDrawer] = useState(true);
+  const [drawerOpen, setDrawer] = useState(false);
 
   /*
     template 是指用户选择模版的序号
@@ -82,7 +82,12 @@ export default function App() {
           </Toolbar>
         </AppBar>
         <div className={classes.NaviBar}>
-          <NaviBar setStatus={setStatus} setRenderBg={setRenderBg} setTemplate={setTemplate}>
+          <NaviBar 
+            setStatus={setStatus} 
+            setRenderBg={setRenderBg} 
+            setTemplate={setTemplate}
+            setDrawer={setDrawer}
+            >
           </NaviBar>
         </div>
         <Preview
