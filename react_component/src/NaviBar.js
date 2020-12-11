@@ -340,6 +340,11 @@ export default function NaviBar(props) {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       });
     }
+    // 倒数第二步点击，强制显示预览
+    else if (index === steps.length - 2) {
+      props.setDrawer(true);
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
     else {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
