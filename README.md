@@ -6,13 +6,6 @@
 
 @ShengqiCao
 
-**Content**
-
-- [软件界面原型自动生成器](#软件界面原型自动生成器)
-  - [Files](#files)
-
-
-
 ## How to Use
 
 0. 本项目暂时没有搭建后端服务器，前端暂时由GitHub Pages托管，后端请根据提示在本地搭建服务器配合使用。
@@ -70,12 +63,22 @@
 
 
 
+## TO-DO & BUGS
+
+- [ ] 当爬取的图片存在不能识别情况，后端无法返回，前端无限卡死
+- [ ] 功能需求的词义提取
+- [ ] 功能词库的扩充
+- [ ] 网站类型的标注
+- [ ] 预览内容的及时变更
+- [ ] 颜色的渲染（primary 和 secondary 的选择，参考material-ui的实现）
+- [ ] 根据网站类型标注的多种布局
+
 ## Framework
 
 - React
   - Material-UI
 - fastapi
-- http.server
+- http-server
 
 
 
