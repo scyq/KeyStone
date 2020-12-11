@@ -19,6 +19,8 @@ import Backdrop from '@material-ui/core/Backdrop';
 
 
 const hostURL = "http://127.0.0.1:9999/";
+const funcStep = 0;   /* 分析功能的步骤数 */
+const colorStep = 1;  /* 分析颜色的步骤数 */
 
 function getSteps() {
   return ['请输入您主要的应用场景', '您想要什么样的风格配色？', '根据您的输入，我们推断您喜欢以下几种配色：', '您还有其他什么需求？'];
@@ -221,7 +223,7 @@ export default function NaviBar(props) {
                 name="otherDemand"
                 autoComplete="otherDemand"
                 autoFocus
-                onChange={() => {}}
+                onChange={() => { }}
               />
             </form>
           </div>
@@ -232,6 +234,18 @@ export default function NaviBar(props) {
     }
   }
 
+  /*
+    @function splitSpeech
+    更新类中的words并把词语和词性分开
+    @param {Array{string}} theWords NLP处理后带有词性的词语数组
+  */
+  const splitSpeech = (theWords) => {
+    return theWords.map(
+      word => {
+        return word.split('/');
+      }
+    );
+  }
 
   /* 向本地端口发送get请求 */
   /*
@@ -241,21 +255,22 @@ export default function NaviBar(props) {
   const nlpSearchFunc = (analysisDoneCallBack) => {
     if (funcInput.length <= 0) {
       analysisDoneCallBack();
-      /* TODO 更改需求 */
       return;
     }
+    
     fetch(hostURL + '?query=' + funcInput)
       .then(res => res.json())
       .then(data => {
-        let funcData = data["data"];
-        /* TODO 处理功能分词 */
+        let funcData = splitSpeech(data["data"]);
+        let AnalysisInfo = wordsHandler.Analysis(funcData, 0);
+        console.log(AnalysisInfo);
       });
   }
 
   /* 向本地端口发送get请求 */
   /*
     @function nlpSearchColor 分析颜色并展示用户可能喜欢的颜色
-    @param analysisDoneCallBack 回调函数，用于更新背景颜色
+    @param analysisDoneCallBack 回调函数，用于结束分析状态
   */
   const nlpSearchColor = (analysisDoneCallBack) => {
     if (colorStyleInput.length <= 0) {
@@ -310,30 +325,20 @@ export default function NaviBar(props) {
             }
           }
         }
-
-        /* 分词交给后端处理了 */
-        /* 利用正则表达式将长空格变成一个空格并分成数组，去掉头部是因为头部是一个空格 */
-        // data["data"] = data["data"].replace(/\s+/g, ' ').split(' ');
-        // data["data"].shift();
-        console.log(data["data"]);
-        wordsHandler.splitSpeech(data["data"]);
-        /* 传入回调函数，重新触发渲染 */
-        wordsHandler.wordAnalysis(setApplyColor);  /* 分析语义 */
       });
-
   };
 
 
   /* 如果index是颜色分析，则渲染颜色 */
   const handleNext = (index) => {
-    if (index === 0 && templateChoice === 0) {
+    if (index === funcStep && templateChoice === 0) {
       setIfStartAnalysis(true);
       nlpSearchFunc(() => {
         setIfStartAnalysis(false);
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       });
     }
-    else if (index === 1) {
+    else if (index === colorStep) {
       setIfStartAnalysis(true);
       nlpSearchColor(() => {
         setIfStartAnalysis(false);
