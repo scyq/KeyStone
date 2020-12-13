@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -16,12 +16,91 @@ import WordsHandler from './WordsHandler';
 import ColorThief from '../node_modules/colorthief/dist/color-thief';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Backdrop from '@material-ui/core/Backdrop';
+import StepConnector from '@material-ui/core/StepConnector';
+import SettingsIcon from '@material-ui/icons/Settings';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import VideoLabelIcon from '@material-ui/icons/VideoLabel';
+import clsx from 'clsx';
 
 
 const hostURL = "http://127.0.0.1:9999/";
 const funcStep = 0;   /* 分析功能的步骤数 */
 const colorStep = 1;  /* 分析颜色的步骤数 */
 
+
+/* Icon的样式 */
+const useColorlibStepIconStyles = makeStyles({
+  root: {
+    backgroundColor: '#ccc',
+    zIndex: 1,
+    color: '#fff',
+    width: 40,
+    height: 40,
+    display: 'flex',
+    borderRadius: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  active: {
+    backgroundImage:
+      'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+    boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+  },
+  completed: {
+    backgroundImage:
+      'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+  },
+});
+
+
+const ColorlibConnector = withStyles({
+  alternativeLabel: {
+    top: 22,
+  },
+  active: {
+    '& $line': {
+      backgroundImage:
+        'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+    },
+  },
+  completed: {
+    '& $line': {
+      backgroundImage:
+        'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+    },
+  },
+  line: {
+    height: 3,
+    border: 0,
+    backgroundColor: '#eaeaf0',
+    borderRadius: 1,
+  },
+})(StepConnector);
+
+/* Stepper 每一步的Icon 在这里修改 */
+function ColorlibStepIcon(props) {
+  const classes = useColorlibStepIconStyles();
+  const { active, completed } = props;
+
+  const icons = {
+    1: <SettingsIcon />,
+    2: <GroupAddIcon />,
+    3: <VideoLabelIcon />,
+  };
+
+  return (
+    <div
+      className={clsx(classes.root, {
+        [classes.active]: active,
+        [classes.completed]: completed,
+      })}
+    >
+      {icons[String(props.icon)]}
+    </div>
+  );
+}
+
+/* 每一步的内容 */
 function getSteps() {
   return ['请输入您主要的应用场景', '您想要什么样的风格配色？', '根据您的输入，我们推断您喜欢以下几种配色：', '您还有其他什么需求？'];
 }
@@ -63,8 +142,7 @@ export default function NaviBar(props) {
   const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
-      left: 0,
-      background: appliedColor
+      background: "white"
     },
     button: {
       marginTop: theme.spacing(1),
@@ -89,6 +167,7 @@ export default function NaviBar(props) {
       color: '#fff',
     },
   }));
+
   const steps = getSteps();
   const classes = useStyles();
 
@@ -373,13 +452,23 @@ export default function NaviBar(props) {
 
   return (
     <div className={classes.root} >
-      <Stepper activeStep={activeStep} orientation="vertical">
+      <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector></ColorlibConnector>}>
+        {steps.map((label) => (
+          <Step key={label}>
+            <StepLabel StepIconComponent={ColorlibStepIcon}>
+
+            </StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+
+      {/* 
+      <Stepper activeStep={activeStep} orientation="horizontal">
         {steps.map((label, index) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
             <StepContent>
               <Typography>{getStepHint(index)}</Typography>
-              {/* 每一步显示不同的内容 */}
               {getStepContent(index)}
               <div className={classes.actionsContainer}>
                 <div>
@@ -422,7 +511,7 @@ export default function NaviBar(props) {
             查看效果
           </Button>
         </Paper>
-      )}
+      )} */}
     </div>
   );
 }

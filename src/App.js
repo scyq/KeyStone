@@ -17,15 +17,15 @@ import { AppBar, IconButton, Toolbar } from '@material-ui/core';
 import GridLayout from 'react-grid-layout';
 import MenuIcon from '@material-ui/icons/Menu';
 import ToolBar from './ToolBar';
-import Preview from './Preview';
 import GitHubIcon from '@material-ui/icons/GitHub';
+import MainPanel from './MainPanel';
+
 
 
 
 export default function App() {
   const [status, setStatus] = useState(0);
   const [renderBg, setRenderBg] = useState("White");
-  const [drawerOpen, setDrawer] = useState(false);
 
   /*
     template 是指用户选择模版的序号
@@ -33,22 +33,18 @@ export default function App() {
   */
   const [template, setTemplate] = useState(0);
 
-  const [customFunction, setFunction] = useState("您还未输入");
-
-  const [design, setDesign] = useState({
-    "layout" : [],
-    "navigate": []
-  });
 
   const useStyles = makeStyles((theme) => ({
+    root: {
+      height: "100%",
+    },
     NaviBar: {
-      position: 'fixed',
-      width: '200vh',
+      position: 'absolute',
+      width: '100%',
       left: 0,
-      top: 80,
+      top: 70,
       right: 0,
-      height: '100vh',
-      background: 'white',
+      background: '#fff',
       display: 'flex',
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
@@ -69,13 +65,26 @@ export default function App() {
     BarTitle: {
       flexGrow: 1
     },
+
+    MainPanel: {
+      position: "absolute",
+      top: 160,
+      left: 0,
+      right: 0,
+      width: "100%",
+      height: "85%",
+    },
+
+    previewPanel: {
+      overflow: "scroll"
+    }
   }));
 
   const classes = useStyles();
 
   if (status === 0) {
     return (
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" className={classes.root}>
         <AppBar style={{ background: "#36648B" }}>
           <Toolbar>
             <Typography variant="h6" color="inherit" noWrap className={classes.BarTitle}>
@@ -87,33 +96,24 @@ export default function App() {
             }}>
               <GitHubIcon />
             </IconButton>
-            <IconButton edge="end" color="inherit" aria-label="menu" onClick={() => {
-              setDrawer(true);
-            }}
-            >
-              <MenuIcon />
-            </IconButton>
           </Toolbar>
         </AppBar>
+
         <div className={classes.NaviBar}>
-          <NaviBar 
-            setStatus={setStatus} 
-            setRenderBg={setRenderBg} 
+          <NaviBar
+            setStatus={setStatus}
+            setRenderBg={setRenderBg}
             setTemplate={setTemplate}
-            setDrawer={setDrawer}
-            setDesign={setDesign}
-            setFunction={setFunction}
-            >
+          >
           </NaviBar>
         </div>
-        <Preview
-          open={drawerOpen}
-          func = {customFunction}
-          design={design}
-          setDrawer={setDrawer} 
-          customFunction={customFunction}
-        >
-        </Preview>
+
+        <div className={classes.MainPanel}>
+          <MainPanel >
+
+          </MainPanel>
+        </div>
+
       </Container>
     );
   }
@@ -232,7 +232,7 @@ export default function App() {
 
       default:
         return (
-          
+
           <div className={classes.Render}>
 
           </div>
