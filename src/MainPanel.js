@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function MainPanel() {
+export default function MainPanel(props) {
 
     const classes = useStyles();
 
@@ -51,9 +51,13 @@ export default function MainPanel() {
                 }}
             >
 
-                <div className={classes.configPanel}> 
-                    <ConfigPanel>
-                        
+                <div className={classes.configPanel}>
+                    <ConfigPanel
+                        getSteps={props.getSteps}
+                        activeStep={props.activeStep}
+                        setActiveStep={props.setActiveStep}
+                    >
+
                     </ConfigPanel>
                 </div>
                 <div className={classes.previewPanel}>

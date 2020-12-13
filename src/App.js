@@ -21,6 +21,10 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import MainPanel from './MainPanel';
 
 
+/* 每一步的内容 */
+function getSteps() {
+  return ['请输入您主要的应用场景', '您想要什么样的风格配色？', '根据您的输入，我们推断您喜欢以下几种配色：', '您还有其他什么需求？'];
+}
 
 
 export default function App() {
@@ -33,6 +37,8 @@ export default function App() {
   */
   const [template, setTemplate] = useState(0);
 
+  /* 到哪儿一步了 */
+  const [activeStep, setActiveStep] = useState(0);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -101,15 +107,19 @@ export default function App() {
 
         <div className={classes.NaviBar}>
           <NaviBar
-            setStatus={setStatus}
-            setRenderBg={setRenderBg}
-            setTemplate={setTemplate}
+            getSteps={getSteps}
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
           >
           </NaviBar>
         </div>
 
         <div className={classes.MainPanel}>
-          <MainPanel >
+          <MainPanel 
+            getSteps={getSteps}
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
+          >
 
           </MainPanel>
         </div>
