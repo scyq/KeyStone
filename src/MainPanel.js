@@ -45,8 +45,8 @@ export default function MainPanel(props) {
                     width: "5px",
                     margin: "-5px 0",
                     backgroundColor: "rgb(54, 100, 139)",
-                    borderLeft: "5px solid rgb(54, 100, 139)",
-                    borderRight: "5px solid rgb(54, 100, 139)",
+                    borderLeft: "3px solid rgb(54, 100, 139)",
+                    borderRight: "3px solid rgb(54, 100, 139)",
                     cursor: "col-resize"
                 }}
             >
@@ -56,6 +56,8 @@ export default function MainPanel(props) {
                         getSteps={props.getSteps}
                         activeStep={props.activeStep}
                         setActiveStep={props.setActiveStep}
+                        setDesign={setDesign}
+                        setFunction={setFunction}
                     >
 
                     </ConfigPanel>

@@ -109,7 +109,6 @@ export default function App() {
           <NaviBar
             getSteps={getSteps}
             activeStep={activeStep}
-            setActiveStep={setActiveStep}
           >
           </NaviBar>
         </div>

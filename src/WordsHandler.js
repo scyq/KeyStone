@@ -28,14 +28,11 @@ class WordsHandler {
             "navigate": []
         };
         for (let word of words) {
-            let content = word[0];  /* 词语 */
-            let speech = word[1];   /* 词性 */
-
-            if (thesaurus["Layout"][content]) {     /* 词库是否存在该词 */
-                res["layout"].push(thesaurus["Layout"][content]);
+            if (thesaurus["Layout"][word]) {     /* 词库是否存在该词 */
+                res["layout"].push(thesaurus["Layout"][word]);
             }
-            if (thesaurus["Navigate"][content]) {
-                res["navigate"].push(thesaurus["Navigate"][content]);
+            if (thesaurus["Navigate"][word]) {
+                res["navigate"].push(thesaurus["Navigate"][word]);
             }
         }
 
@@ -45,11 +42,10 @@ class WordsHandler {
     /*
         @function Analysis
         词义提取核心代码 在词库中提取对应的词语 并映射
-        @param {Array} words 需要分析的List，这个Array一定是二维数组，分词完成的数组。
+        @param {Array} words 需要分析的List，分词完成的一维数组。
         @param {function} func 功能码 0->提取对应架构层信息
     */
     Analysis(words, func) {
-        console.log(thesaurus);
         let res = undefined;
         switch (func) {
             case 0:

@@ -123,24 +123,6 @@ export default function NaviBar(props) {
       marginTop: theme.spacing(1),
       marginRight: theme.spacing(1),
     },
-    actionsContainer: {
-      marginBottom: theme.spacing(2),
-    },
-    resetContainer: {
-      padding: theme.spacing(3),
-    },
-    avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-      width: '30%', // Fix IE 11 issue.
-      marginTop: theme.spacing(1),
-    },
-    backdrop: {
-      zIndex: theme.zIndex.drawer + 1,
-      color: '#fff',
-    },
   }));
 
   const steps = props.getSteps();
@@ -203,9 +185,6 @@ export default function NaviBar(props) {
                   >
                     {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                   </Button>
-                  <Backdrop className={classes.backdrop} open={ifStartAnalysis} >
-                    <CircularProgress color="inherit" />
-                  </Backdrop>
                 </div>
               </div>
             </StepContent>
