@@ -18,6 +18,7 @@ import GridLayout from 'react-grid-layout';
 import ToolBar from './ToolBar';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import MainPanel from './MainPanel';
+import Index from './home/Home';
 
 
 /* 每一步的内容 */
@@ -27,7 +28,7 @@ function getSteps() {
 
 
 export default function App() {
-  const [status, setStatus] = useState(0);
+  const [status, setStatus] = useState(-1);
   const [renderBg, setRenderBg] = useState("White");
 
   /*
@@ -91,7 +92,14 @@ export default function App() {
 
   const classes = useStyles();
 
-  if (status === 0) {
+  if (status === -1) {
+    return (
+      <Index>
+        
+      </Index>
+    );
+  }
+  else if (status === 0) {
     return (
       <Container component="main" className={classes.root}>
         <AppBar style={{ background: "#36648B" }}>

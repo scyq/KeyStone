@@ -65,13 +65,16 @@ export function nlpSearchColor (colorStyleInput, setWishColor, analysisDoneCallB
                     /* 这是回调函数，当图片爬完了，就会调用 */
                     // eslint-disable-next-line
                     img.addEventListener('load', function () {
-                        let rgb = colorThief.getColor(img);
-                        let rgbHex = rgbToHex(rgb[0], rgb[1], rgb[2]);
-                        temp.push(rgbHex);
-                        if (temp.length >= wordsCounts) {
+                        /* 会返回一堆颜色 */
+                        let rgbs = colorThief.getPalette(img);
+                        for (let rgb of rgbs) {
+                            let rgbHex = rgbToHex(rgb[0], rgb[1], rgb[2]);
+                            temp.push(rgbHex);
+                        }
+                        /* 去重 */
+                        temp = Array.from(new Set(temp));
+                        if (data.indexOf(word) === data.length - 1 || temp.length >= 10) {
                             analysisDoneCallBack();
-                            /* 去重 */
-                            temp = Array.from(new Set(temp));
                             setWishColor(temp);
                         }
                     });
