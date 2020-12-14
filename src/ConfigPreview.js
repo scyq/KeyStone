@@ -10,14 +10,10 @@ import ColorizeIcon from '@material-ui/icons/Colorize';
 import Box from '@material-ui/core/Box';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import Skeleton from '@material-ui/lab/Skeleton';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Divider } from '@material-ui/core';
 
 export default function ConfigPreview(props) {
-
-    const theme = useTheme();
-
-    const drawerWidth = "25%";
 
     const useStyles = makeStyles((theme) => ({
         root: {

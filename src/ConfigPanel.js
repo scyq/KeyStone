@@ -9,12 +9,15 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Switch } from '@material-ui/core';
 import nlpSearchFunc from './WebReq';
 import { nlpSearchColor } from './WebReq';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
     buttonPos: {
         position: "absolute",
         right: 3,
-        bottom: 10
+        bottom: 10,
+        padding: theme.spacing(3)
     },
     button: {
         marginTop: theme.spacing(1),
@@ -27,17 +30,19 @@ const useStyles = makeStyles((theme) => ({
     actionsContainer: {
         marginBottom: theme.spacing(2),
     },
-    resetContainer: {
-        padding: theme.spacing(3),
-    },
     avatar: {
         margin: theme.spacing(1),
         backgroundColor: theme.palette.secondary.main,
     },
     form: {
-        width: '30%', // Fix IE 11 issue.
+        width: '50%',
         marginTop: theme.spacing(1),
     },
+    inputPos: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: 'center'
+    }
 }));
 
 
@@ -53,7 +58,7 @@ export default function ConfigPanel(props) {
     const [funcInput, setFuncInput] = useState("");                 /* 更改用户功能需求输入 */
     const [colorStyleInput, setColorStyleInput] = useState("");     /* 获取用户对颜色需求的输入 */
     const [wishColor, setWishColor] = useState([]);                 /* 提取用户可能期待的颜色，这个不是最终的颜色 */
-
+    const [appliedColor, setApplyColor] = useState(["White"]);      /* 最终应用的颜色，依赖于用户的选择 */
 
     /* 获取用户对功能需求的输入 */
     const funcDemandChange = (event) => {
@@ -72,6 +77,14 @@ export default function ConfigPanel(props) {
         props.setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
 
+    const handleReset = () => {
+        props.setActiveStep(0);
+    };
+
+    const handleRender = () => {
+        props.setStatus(1);
+    }
+
 
     /*
       @function getStepContent
@@ -80,23 +93,25 @@ export default function ConfigPanel(props) {
     function getStepContent(step) {
         switch (step) {
             case 0:
-                // 模版选项
+                // 功能输入
                 return (
                     <div>
-                        <form className={classes.form} noValidate>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="funcInput"
-                                label="输入您的主要应用场景"
-                                name="funcInput"
-                                autoComplete="funcInput"
-                                autoFocus
-                                onChange={funcDemandChange}
-                            />
-                        </form>
+                        <div className={classes.inputPos}>
+                            <form className={classes.form} noValidate>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="funcInput"
+                                    label="输入您的主要应用场景"
+                                    name="funcInput"
+                                    autoComplete="funcInput"
+                                    autoFocus
+                                    onChange={funcDemandChange}
+                                />
+                            </form>
+                        </div>
                     </div>
                 );
 
@@ -104,20 +119,22 @@ export default function ConfigPanel(props) {
                 // 输入颜色风格
                 return (
                     <div>
-                        <form className={classes.form} noValidate>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="colorInput"
-                                label="输入您想要的风格配色"
-                                name="colorInput"
-                                autoComplete="colorInput"
-                                autoFocus
-                                onChange={colorDemandChange}
-                            />
-                        </form>
+                        <div className={classes.inputPos}>
+                            <form className={classes.form} noValidate>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="colorInput"
+                                    label="输入您想要的风格配色"
+                                    name="colorInput"
+                                    autoComplete="colorInput"
+                                    autoFocus
+                                    onChange={colorDemandChange}
+                                />
+                            </form>
+                        </div>
                     </div>
                 );
 
@@ -152,7 +169,7 @@ export default function ConfigPanel(props) {
                     );
                 });
                 return (
-                    <div style={{ display: "flex" }}>
+                    <div style={{ display: "inline-flex" }}>
                         {colorBar}
                     </div>
                 );
@@ -161,25 +178,33 @@ export default function ConfigPanel(props) {
                 // 其他需求声明
                 return (
                     <div>
-                        <form className={classes.form} noValidate>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="otherDemand"
-                                label="您其他的需求"
-                                name="otherDemand"
-                                autoComplete="otherDemand"
-                                autoFocus
-                                onChange={() => { }}
-                            />
-                        </form>
+                        <div className={classes.inputPos}>
+                            <form className={classes.form} noValidate>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="otherDemand"
+                                    label="您其他的需求"
+                                    name="otherDemand"
+                                    autoComplete="otherDemand"
+                                    autoFocus
+                                    onChange={() => { }}
+                                />
+                            </form>
+                        </div>
                     </div>
                 );
 
             default:
-                return (<div></div>);
+                return (
+                    <div>
+                        <h1>
+                            HELLO
+                        </h1>
+                    </div>
+                );
         }
     }
 
@@ -213,25 +238,44 @@ export default function ConfigPanel(props) {
                 {getStepContent(props.activeStep)}
             </div>
 
+            {props.activeStep <= steps.length - 1 && (
+                <div className={classes.buttonPos}>
+                    <Button
+                        disabled={props.activeStep === 0}
+                        onClick={handleBack}
+                        className={classes.button}
+                    >
+                        Back
+                            </Button>
 
-            <div className={classes.buttonPos}>
-                <Button
-                    disabled={props.activeStep === 0}
-                    onClick={handleBack}
-                    className={classes.button}
-                >
-                    Back
-                </Button>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => handleNext(props.activeStep)}
+                        className={classes.button}
+                    >
+                        {props.activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                    </Button>
+                </div>
+            )}
 
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleNext(props.activeStep)}
-                    className={classes.button}
-                >
-                    {props.activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                </Button>
-            </div>
+            {props.activeStep === steps.length && (
+                <Paper square elevation={0} className={classes.buttonPos}>
+                    <Typography>所有步骤已完成</Typography>
+                    <Button onClick={handleReset} className={classes.button}>
+                        重新选择
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        className={classes.button}
+                        onClick={handleRender}
+                    >
+                        查看效果
+                    </Button>
+                </Paper>
+            )
+            }
 
         </div>
     );
