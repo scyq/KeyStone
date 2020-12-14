@@ -33,6 +33,8 @@ export default function MainPanel(props) {
                 setDesign={setDesign}
                 setFunction={setFunction}
                 setStatus={props.setStatus}
+                customFunction={customFunction}
+                design={design}
             >
             </ConfigPanel>
         </div>
