@@ -1,2 +1,4 @@
 run.sh
 __pycache__/
+node_modules
+build
