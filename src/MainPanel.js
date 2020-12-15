@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'center',
         width: '100%',
+        overflow: "auto"
     },
 }));
 

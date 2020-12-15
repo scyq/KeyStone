@@ -73,7 +73,7 @@ export function nlpSearchColor (colorStyleInput, setWishColor, analysisDoneCallB
                         }
                         /* 去重 */
                         temp = Array.from(new Set(temp));
-                        if (data.indexOf(word) === data.length - 1 || temp.length >= 10) {
+                        if (data.indexOf(word) === data.length - 1) {
                             analysisDoneCallBack();
                             setWishColor(temp);
                         }
@@ -86,7 +86,7 @@ export function nlpSearchColor (colorStyleInput, setWishColor, analysisDoneCallB
                     catch
                     {
                         console.log('Fetch' + word + ' img Err');
-                        analysisDoneCallBack();
+                        return;
                     }
                 }
             }

@@ -6,11 +6,13 @@ import ProductHero from './modules/views/ProductHero';
 import ProductValues from './modules/views/ProductValues';
 import AppAppBar from './modules/views/AppAppBar';
 
-function Index() {
+function Index(props) {
   return (
     <React.Fragment>
       <AppAppBar />
-      <ProductHero />
+      <ProductHero 
+        setStatus={props.setStatus}
+      />
       <ProductValues />
       <ProductSmokingHero />
       <AppFooter />

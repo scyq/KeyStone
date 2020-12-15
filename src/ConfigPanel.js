@@ -73,6 +73,17 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
         height: "50px"
     },
+    colorBlock: {
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "row",
+        overflow: "auto"
+    },
+    rgbFont: {
+        fontSize: "24px",
+        fontFamily: "Microsoft Yahei",
+    }
 
 }));
 
@@ -211,21 +222,47 @@ export default function ConfigPanel(props) {
                             <FormControlLabel
                                 value={rgb}
                                 control={
-                                    <Switch
-                                        color="primary"
-                                        label={rgb}
-                                    >
-                                    </Switch>}
+                                    <div style={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}>
+                                        <Switch
+                                            color="primary"
+                                            label={rgb}
+                                        >
+                                        </Switch>
+                                        <Switch
+                                            color="secondary"
+                                            label={rgb}
+                                        >
+                                        </Switch>
+                                    </div>
+                                }
+
                                 label={rgb}
-                                labelPlacement="start"
+                                className={classes.rgbFont}
+                                labelPlacement="top"
                             >
                             </FormControlLabel>
                         </div>
                     );
                 });
                 return (
-                    <div style={{ display: "inline-flex" }}>
-                        {colorBar}
+                    <div className={classes.inputPos}>
+                        <p className={classes.font}>
+                            请选择您喜欢的主色和配色
+                        </p>
+                        <p style={{
+                            fontSize: "24px",
+                            fontFamily: "Microsoft Yahei",
+                        }}>
+                            第一排开关为主色，第二排开关为配色
+                        </p>
+                        <div className={classes.colorBlock}>
+                            {colorBar}
+                        </div>
                         <div className={classes.emptyBlock}></div>
                     </div>
                 );

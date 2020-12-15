@@ -4,8 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '../components/Button';
 import Typography from '../components/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
+import png from '../../../logo/back.png';
 
-const backgroundImage = "https://images.cnblogs.com/cnblogs_com/scyq/1823238/o_201214140933back.png"
+const backgroundImage = png;
 
 const styles = (theme) => ({
   background: {
@@ -35,7 +36,7 @@ function ProductHero(props) {
         <img style={{ display: 'none' }} src={backgroundImage} alt="increase priority" />
         <div className={classes.hi}>
           <Typography color="inherit" align="center" variant="h1" marked="center" style={{ marginTop: 180 }}>
-            软件交互原型自动生成系统
+            软件交互界面原型自动生成系统
         </Typography>
 
           <Typography color="inherit" align="center" variant="h4" style={{ marginBottom: 20, marginTop: 400 }}>
@@ -46,6 +47,9 @@ function ProductHero(props) {
             variant="contained"
             size="large"
             style={{ width: 200, marginBottom: 10}}
+            onClick={()=>{
+              props.setStatus(0);
+            }}
           >
             Try it Now!
         </Button>
