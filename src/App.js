@@ -4,20 +4,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import NaviBar from './NaviBar';
 import Typography from '@material-ui/core/Typography';
-import Album from './template/album/Album';
-import Blog from './template/blog/Blog';
-import Checkout from './template/checkout/Checkout';
-import Dashboard from './template/dashboard/Dashboard';
-import Pricing from './template/pricing/Pricing';
-import SignIn from './template/sign-in/SignIn';
-import SignInSide from './template/sign-in-side/SignInSide';
-import SignUp from './template/sign-up/SignUp';
-import StickyFooter from './template/sticky-footer/StickyFooter';
+
 import { AppBar, IconButton, Toolbar } from '@material-ui/core';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import MainPanel from './MainPanel';
 import Index from './home/Home';
-import CustomDesign from './CustomDesign';
+import ShowCase from './ShowCase';
+
 
 
 /* 每一步的内容 */
@@ -29,12 +22,13 @@ function getSteps() {
 export default function App() {
   const [status, setStatus] = useState(-1);
   const [renderBg, setRenderBg] = useState("White");
+  const [customFunction, setFunction] = useState("您还未输入");
 
-  /*
-    template 是指用户选择模版的序号
-    0 - Default
-  */
-  const [template, setTemplate] = useState(0);
+  const [design, setDesign] = useState({
+      "layout": [],
+      "navigate": [],
+      "template": []
+  });
 
   /* 到哪儿一步了 */
   const [activeStep, setActiveStep] = useState(0);
@@ -124,6 +118,10 @@ export default function App() {
             activeStep={activeStep}
             setActiveStep={setActiveStep}
             setStatus={setStatus}
+            setDesign={setDesign}
+            setFunction={setFunction}
+            customFunction={customFunction}
+            design={design}
           >
 
           </MainPanel>
@@ -134,12 +132,12 @@ export default function App() {
   }
   else if (status === 1) {
     return (
-      <CustomDesign
+      <ShowCase 
+        template={design["template"]}
         setStatus={setStatus}
       >
 
-      </CustomDesign>
-    );
+      </ShowCase>);
   }
 
 }

@@ -25,7 +25,8 @@ class WordsHandler {
     funcAnalysis(words) {
         let res = {
             "layout": [],
-            "navigate": []
+            "navigate": [],
+            "template": []
         };
         for (let word of words) {
             if (thesaurus["Layout"][word]) {     /* 词库是否存在该词 */
@@ -33,6 +34,9 @@ class WordsHandler {
             }
             if (thesaurus["Navigate"][word]) {
                 res["navigate"].push(thesaurus["Navigate"][word]);
+            }
+            if (thesaurus["Template"][word]) {
+                res["template"].push(thesaurus["Template"][word]);
             }
         }
 
