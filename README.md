@@ -31,10 +31,8 @@
    3. 进入项目根目录后，在终端输入
 
    4. ```shell
-      cd react_component
       npm install --dependencies
       .... 安装完毕后 ....
-      cd ..
       ./run.sh
       ```
 

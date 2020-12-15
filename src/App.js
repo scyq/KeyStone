@@ -14,18 +14,21 @@ import SignInSide from './template/sign-in-side/SignInSide';
 import SignUp from './template/sign-up/SignUp';
 import StickyFooter from './template/sticky-footer/StickyFooter';
 import { AppBar, IconButton, Toolbar } from '@material-ui/core';
-import GridLayout from 'react-grid-layout';
-import MenuIcon from '@material-ui/icons/Menu';
-import ToolBar from './ToolBar';
-import Preview from './Preview';
 import GitHubIcon from '@material-ui/icons/GitHub';
+import MainPanel from './MainPanel';
+import Index from './home/Home';
+import CustomDesign from './CustomDesign';
 
+
+/* 每一步的内容 */
+function getSteps() {
+  return ['请输入您主要的应用场景', '您想要什么样的风格配色？', '根据您的输入，我们推断您喜欢以下几种配色：', '您还有其他什么需求？'];
+}
 
 
 export default function App() {
-  const [status, setStatus] = useState(0);
+  const [status, setStatus] = useState(-1);
   const [renderBg, setRenderBg] = useState("White");
-  const [drawerOpen, setDrawer] = useState(false);
 
   /*
     template 是指用户选择模版的序号
@@ -33,23 +36,19 @@ export default function App() {
   */
   const [template, setTemplate] = useState(0);
 
-  const [customFunction, setFunction] = useState("您还未输入");
-
-  const [design, setDesign] = useState({
-    "layout" : [],
-    "navigate": []
-  });
+  /* 到哪儿一步了 */
+  const [activeStep, setActiveStep] = useState(0);
 
   const useStyles = makeStyles((theme) => ({
+    root: {
+      display: "flex",
+      height: "100vh",
+      flexDirection: "column",
+    },
     NaviBar: {
-      position: 'fixed',
-      width: '200vh',
-      left: 0,
-      top: 80,
-      right: 0,
-      height: '100vh',
-      background: 'white',
-      display: 'flex',
+      marginTop: '80px',
+      width: '100%',
+      background: '#fff',
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
@@ -69,17 +68,38 @@ export default function App() {
     BarTitle: {
       flexGrow: 1
     },
+
+    MainPanel: {
+      display: "flex",      
+      flexGrow: 1,
+      width: '100%',
+    },
+
+    previewPanel: {
+      overflow: "scroll"
+    }
   }));
 
   const classes = useStyles();
 
-  if (status === 0) {
+  if (status === -1) {
     return (
-      <Container component="main" maxWidth="xs">
+      // <CustomDesign>
+
+      // </CustomDesign>
+      <Index 
+        setStatus={setStatus}
+      >
+      </Index>
+    );
+  }
+  else if (status === 0) {
+    return (
+      <Container component="main" className={classes.root}>
         <AppBar style={{ background: "#36648B" }}>
           <Toolbar>
             <Typography variant="h6" color="inherit" noWrap className={classes.BarTitle}>
-              软件界面原型自动生成机
+              软件交互界面原型自动生成系统
             </Typography>
             <IconButton color="inherit" onClick={() => {
               const w = window.open('about:blank');
@@ -87,158 +107,39 @@ export default function App() {
             }}>
               <GitHubIcon />
             </IconButton>
-            <IconButton edge="end" color="inherit" aria-label="menu" onClick={() => {
-              setDrawer(true);
-            }}
-            >
-              <MenuIcon />
-            </IconButton>
           </Toolbar>
         </AppBar>
+
         <div className={classes.NaviBar}>
-          <NaviBar 
-            setStatus={setStatus} 
-            setRenderBg={setRenderBg} 
-            setTemplate={setTemplate}
-            setDrawer={setDrawer}
-            setDesign={setDesign}
-            setFunction={setFunction}
-            >
+          <NaviBar
+            getSteps={getSteps}
+            activeStep={activeStep}
+          >
           </NaviBar>
         </div>
-        <Preview
-          open={drawerOpen}
-          func = {customFunction}
-          design={design}
-          setDrawer={setDrawer} 
-          customFunction={customFunction}
-        >
-        </Preview>
+
+        <div className={classes.MainPanel}>
+          <MainPanel
+            getSteps={getSteps}
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
+            setStatus={setStatus}
+          >
+
+          </MainPanel>
+        </div>
+
       </Container>
     );
   }
   else if (status === 1) {
-    switch (template) {
-      case 0:
-        const layout = [
-          { i: 'naviBar', x: 0, y: 0, w: 12, h: 5, resizeHandles: ['se', 'sw'] },
-          { i: 'main', x: 3, y: 5, w: 6, h: 10, resizeHandles: ['se', 'sw'] },
-          { i: 'footer', x: 0, y: 20, w: 12, h: 5, resizeHandles: ['se', 'sw'] },
-          { i: 'leftSider', x: 0, y: 5, w: 3, h: 10, resizeHandles: ['se', 'sw'] },
-          { i: 'rightSider', x: 9, y: 5, w: 3, h: 10, resizeHandles: ['se', 'sw'] },
-        ];
-        return (
-          <div>
-            <ToolBar setStatus={setStatus}></ToolBar>
-            <GridLayout className="layout" layout={layout} cols={12} rowHeight={30} width={1200}>
-              <div key="naviBar" style={{ backgroundColor: "#66CCFF" }}>NaviBar</div>
-              <div key="main" style={{ backgroundColor: "Orange" }}>Main</div>
-              <div key="footer" style={{ backgroundColor: "#66CCFF" }}>Footer</div>
-              <div key="leftSider" style={{ backgroundColor: "#FF6666" }}>Left Sider</div>
-              <div key="rightSider" style={{ backgroundColor: "#FF6666" }}>Right Sider</div>
-            </GridLayout>
-          </div>
-        );
+    return (
+      <CustomDesign
+        setStatus={setStatus}
+      >
 
-      case 1:
-        return (
-          <div className={classes.templateRender}>
-            <ToolBar setStatus={setStatus}></ToolBar>
-            <Album>
-
-            </Album>
-          </div>
-        );
-
-      case 2:
-        return (
-          <div className={classes.templateRender}>
-            <ToolBar setStatus={setStatus}></ToolBar>
-            <Blog>
-
-            </Blog>
-          </div>
-        );
-
-      case 3:
-        return (
-          <div className={classes.templateRender}>
-            <ToolBar setStatus={setStatus}></ToolBar>
-            <Checkout>
-
-            </Checkout>
-          </div>
-        );
-
-      case 4:
-        return (
-          <div className={classes.templateRender}>
-            <ToolBar setStatus={setStatus}></ToolBar>
-            <Dashboard>
-
-            </Dashboard>
-          </div>
-        );
-
-      case 5:
-        return (
-          <div className={classes.templateRender}>
-            <ToolBar setStatus={setStatus}></ToolBar>
-            <Pricing>
-
-            </Pricing>
-          </div>
-        );
-
-      case 6:
-        return (
-          <div className={classes.templateRender}>
-            <ToolBar setStatus={setStatus}></ToolBar>
-            <SignIn>
-
-            </SignIn>
-          </div>
-        );
-
-      case 7:
-        return (
-          <div className={classes.templateRender}>
-            <ToolBar setStatus={setStatus}></ToolBar>
-            <SignInSide>
-
-            </SignInSide>
-          </div>
-        );
-
-      case 8:
-        return (
-          <div className={classes.templateRender}>
-            <ToolBar setStatus={setStatus}></ToolBar>
-            <SignUp>
-
-            </SignUp>
-          </div>
-        );
-
-      case 9:
-        return (
-          <div className={classes.templateRender}>
-            <ToolBar setStatus={setStatus}></ToolBar>
-            <StickyFooter>
-
-            </StickyFooter>
-          </div>
-        );
-
-      default:
-        return (
-          
-          <div className={classes.Render}>
-
-          </div>
-        );
-
-    }
+      </CustomDesign>
+    );
   }
 
 }
