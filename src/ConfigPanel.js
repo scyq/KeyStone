@@ -146,6 +146,7 @@ export default function ConfigPanel(props) {
                         </img>
                         <form className={classes.form} noValidate>
                             <TextField
+                                value={funcInput}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -185,6 +186,7 @@ export default function ConfigPanel(props) {
                         </img>
                         <form className={classes.form} noValidate>
                             <TextField
+                                value={colorStyleInput}
                                 variant="outlined"
                                 margin="normal"
                                 required
