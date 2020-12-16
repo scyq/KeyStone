@@ -17,13 +17,17 @@ export default function nlpSearchFunc(funcInput, setDesign, analysisDoneCallBack
         return;
     }
 
-    fetch(hostURL + 'func?query=' + funcInput)
+    /* 防止太快 */
+    window.setTimeout(()=>{
+        fetch(hostURL + 'func?query=' + funcInput)
         .then(res => res.json())
         .then(data => {
             let AnalysisInfo = wordsHandler.Analysis(data, 0);
             setDesign(AnalysisInfo);
             analysisDoneCallBack();
         });
+    }, 1000);
+
 }
 
 
