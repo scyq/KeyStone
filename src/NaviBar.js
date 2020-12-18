@@ -106,7 +106,7 @@ export default function NaviBar(props) {
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel StepIconComponent={ColorlibStepIcon}>
-
+              {label}
             </StepLabel>
           </Step>
         ))}

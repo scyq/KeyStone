@@ -1,5 +1,4 @@
 import React from 'react';
-import ToolBar from './ToolBar';
 import GridLayout from 'react-grid-layout';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -17,7 +16,6 @@ export default function CustomDesign(props) {
 
     return (
         <div>
-            <ToolBar setStatus={props.setStatus}></ToolBar>
             <GridLayout className="layout" layout={layoutCenter} cols={15} rowHeight={30} width={1500} style={{marginTop: 50}}>
                 <div key="naviBar" style={{ backgroundColor: "#66CCFF" }}>NaviBar</div>
                 <div key="main" style={{ backgroundColor: "Orange" }}>Main</div>

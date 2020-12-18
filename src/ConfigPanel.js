@@ -146,6 +146,7 @@ export default function ConfigPanel(props) {
                         </img>
                         <form className={classes.form} noValidate>
                             <TextField
+                                value={funcInput}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -185,6 +186,7 @@ export default function ConfigPanel(props) {
                         </img>
                         <form className={classes.form} noValidate>
                             <TextField
+                                value={colorStyleInput}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -252,7 +254,7 @@ export default function ConfigPanel(props) {
                 return (
                     <div className={classes.inputPos}>
                         <p className={classes.font}>
-                            请选择您喜欢的主色和配色
+                            根据您的输入，我们为您推荐了以下色彩
                         </p>
                         <p style={{
                             fontSize: "24px",
