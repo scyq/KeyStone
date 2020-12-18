@@ -44,16 +44,29 @@ class WordsHandler {
     }
 
     /*
+        @function findColor
+        查找颜色对应的rgb
+        @param {Array} word 一种颜色
+    */
+    findColor(word) {
+        if (thesaurus["Color"][word]) return thesaurus["Color"][word];
+        return null;
+    }
+
+    /*
         @function Analysis
         词义提取核心代码 在词库中提取对应的词语 并映射
         @param {Array} words 需要分析的List，分词完成的一维数组。
-        @param {function} func 功能码 0->提取对应架构层信息
+        @param {function} func 功能码 0->提取对应架构层信息 1->查看是否存在该颜色
     */
     Analysis(words, func) {
         let res = undefined;
         switch (func) {
             case 0:
                 res = this.funcAnalysis(words);
+                return res;
+            case 1:
+                res = this.findColor(words);
                 return res;
             default:
                 break;

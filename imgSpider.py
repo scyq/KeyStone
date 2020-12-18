@@ -11,13 +11,13 @@ import requests
 
 def getUrl(keyword: str) -> str:
     keyword = urllib.parse.quote(keyword, safe='/')
-    url_base = "http://image.baidu.com/search/flip?tn=baiduimage&ie=utf-8&word="
+    url_base = "https://image.baidu.com/search/index?tn=baiduimage&ipn=r&cl=2&lm=-1&st=-1&fm=index&fr=&hs=0&xthttps=111111&sf=1&fmq=&pv=&ic=0&nc=1&z=&se=1&showtab=0&fb=0&width=&height=&face=0&istype=2&ie=utf-8&word="
     ''' 
         pn 是百度图片的页数
         gsm 是页数的十六进制
         这里直接写死，有需要可以扩展该方法
     '''
-    url = url_base + keyword + "&pn=0&gsm=0" + "&ct=&ic=0&lm=-1&width=0&height=0"
+    url = url_base + keyword
     return url
 
 
@@ -31,14 +31,20 @@ def getUrl(keyword: str) -> str:
 def getImageUrl(url: str) -> str:
     head = {"User-Agent" : "User-Agent:Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0;"}
     try:
-        html = requests.get(url, headers=head).text
+        for i in range(7):
+            html = requests.get(url, headers=head).text
     except Exception as e:
         print("Get Image URL ERR: ")
         print(e)
         return []
+    print(html)
     imageUrl = re.findall('"objURL":"(.*?)",', html, re.S)
-    imageUrl = list(enumerate(imageUrl))    # 转成列表，是一个二维列表，(index, url)
-    return imageUrl[0][1]
+    ''' 爬取为空，换匹配项 '''
+    if len(imageUrl) < 1 :
+        imageUrl = re.findall('"ObjURL":"(.*?)",', html, re.S)
+    ''' 如果还是小于1，则只好返回空 '''
+    
+    return imageUrl[0]
 
 
 '''
