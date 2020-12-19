@@ -6,16 +6,32 @@ import Checkout from './template/checkout/Checkout';
 import Dashboard from './template/dashboard/Dashboard';
 import Pricing from './template/pricing/Pricing';
 import SignIn from './template/sign-in/SignIn';
-import SignInSide from './template/sign-in-side/SignInSide';
+//åimport SignInSide from './template/sign-in-side/SignInSide';
 import SignUp from './template/sign-up/SignUp';
 import StickyFooter from './template/sticky-footer/StickyFooter';
 import CustomDesign from './CustomDesign';
 import ToolBar from './ToolBar';
-
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 
 export default function ShowCase(props) {
 
-    let temp = <CustomDesign></CustomDesign>;
+    const theme = createMuiTheme({
+        palette: {
+            primary: {
+                main: props.primaryColor,
+            },
+            secondary: {
+                light: props.secondaryColor,
+                main: props.secondaryColor,
+                contrastText: props.secondaryColor,
+            },
+            contrastThreshold: 3,
+            tonalOffset: 0.2,
+        },
+    });
+
+    let temp = null;
 
     switch (props.template[0]) {
         case "album":
@@ -43,14 +59,14 @@ export default function ShowCase(props) {
             temp = <StickyFooter></StickyFooter>;
             break;
         default:
-            temp = <CustomDesign></CustomDesign>;
+            temp = <CustomDesign primaryColor={props.primaryColor} secondaryColor={props.secondaryColor}></CustomDesign>;
             break;
     }
 
     return (
-        <div>
+        <ThemeProvider theme={theme}>
             <ToolBar setStatus={props.setStatus}></ToolBar>
             {temp}
-        </div>
+        </ThemeProvider>
     );
 }

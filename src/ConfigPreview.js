@@ -8,8 +8,6 @@ import BorderAllIcon from '@material-ui/icons/BorderAll';
 import CallSplitIcon from '@material-ui/icons/CallSplit';
 import ColorizeIcon from '@material-ui/icons/Colorize';
 import Box from '@material-ui/core/Box';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import Skeleton from '@material-ui/lab/Skeleton';
 import { makeStyles } from '@material-ui/core/styles';
 import { Divider } from '@material-ui/core';
 
@@ -61,13 +59,13 @@ export default function ConfigPreview(props) {
 
                 <Divider></Divider>
 
-                <ListItem button key={'colorPrimary'}>
+                <ListItem button key={'colorPrimary'} >
                     <ListItemIcon>
                         <ColorizeIcon />
                     </ListItemIcon>
                     <ListItemText primary={'Primary Color'}>
                     </ListItemText>
-                    <Box bgcolor="primary.main" p={2} m={1}>
+                    <Box bgcolor={props.primaryColor} p={2} m={1}>
                     </Box>
                 </ListItem>
 
@@ -79,21 +77,11 @@ export default function ConfigPreview(props) {
                     </ListItemIcon>
                     <ListItemText primary={'Secondary Color'}>
                     </ListItemText>
-                    <Box bgcolor="secondary.main" p={2} m={1}>
+                    <Box bgcolor={props.secondaryColor} p={2} m={1}>
                     </Box>
                 </ListItem>
 
                 <Divider></Divider>
-
-                <ListItem button key={'preview'}>
-                    <ListItemIcon>
-                        <VisibilityIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={'预览效果'}>
-                    </ListItemText>
-                    <Skeleton animation="wave" width={40} height={40}>
-                    </Skeleton>
-                </ListItem>
 
             </List>
         </div>

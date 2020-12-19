@@ -1,4 +1,5 @@
 import WordsHandler from './WordsHandler';
+import { ColorInfo } from './WordsHandler';
 import ColorThief from '../node_modules/colorthief/dist/color-thief';
 
 const wordsHandler = new WordsHandler();
@@ -42,7 +43,7 @@ export default function nlpSearchFunc(funcInput, setDesign, analysisDoneCallBack
 export function nlpSearchColor(colorStyleInput, setWishColor, analysisDoneCallBack) {
     if (colorStyleInput.length <= 0) {
         analysisDoneCallBack();
-        setWishColor(["#ffffff"]);
+        setWishColor([new ColorInfo("#ffffff", '无输入')]);
         return;
     }
     fetch(hostURL + 'img?query=' + colorStyleInput)
@@ -81,6 +82,9 @@ export function nlpSearchColor(colorStyleInput, setWishColor, analysisDoneCallBa
             /* 颜色欧式距离阈值 */
             const minDiff = 150;
 
+            /* 一个词语能够提取的颜色上限 */
+            let wordMax = Math.ceil(8 / data.length);
+
             if (data.length < 1) {
                 analysisDoneCallBack()
                 setWishColor(["#ffffff"]);
@@ -88,13 +92,15 @@ export function nlpSearchColor(colorStyleInput, setWishColor, analysisDoneCallBa
             else {
                 for (let word of data) {
                     let possibleColor = wordsHandler.Analysis(word, 1);
-                    console.log(possibleColor);
                     /* 在词库 */
                     if (possibleColor !== null) {
-                        temp.push(hexToRgb(possibleColor));
+                        /* 有明确颜色要求的权值拉满 */
+                        let color = new ColorInfo(hexToRgb(possibleColor), word, 99);
+                        temp.push(color);
                     }
                     /* 不在词库 */
                     else {
+                        let cnt = 0;
                         const img = new Image();
                         /* 这是回调函数，当图片爬完了，就会调用 */
                         // eslint-disable-next-line
@@ -107,15 +113,20 @@ export function nlpSearchColor(colorStyleInput, setWishColor, analysisDoneCallBa
                                     let ok = true;
                                     /* 计算相似度 */
                                     for (let _rgb of temp) {
-                                        let distance = colorDistance(rgb, _rgb);
+                                        let distance = colorDistance(rgb, _rgb.color);
                                         /* 颜色过于相近 */
                                         if (distance < minDiff) {
                                             ok = false;
+                                            _rgb.weightUp();    /* 代表该颜色出现多次，权重提升 */
                                             break;
                                         }
                                     }
-                                    /* 如果数量已经大于7 则不再添加 */
-                                    if (ok && temp.length < 7) temp.push(rgb);
+                                    /* 如果数量已经大于8 则不再添加 */
+                                    if (ok && temp.length < 8 && cnt < wordMax) {
+                                        cnt++;
+                                        let color = new ColorInfo(rgb, word);
+                                        temp.push(color);
+                                    } 
                                 }
                             }
                         });
@@ -134,11 +145,16 @@ export function nlpSearchColor(colorStyleInput, setWishColor, analysisDoneCallBa
 
                 }
 
+                /* 设立延时防止异步中断，保证所有词语都遍历完 */
                 window.setTimeout(() => {
-                    /* 所有词语都遍历完 */
-                    temp = temp.map((color) => {
-                        return rgbToHex(color[0], color[1], color[2]);
+                    /* 按照权重进行排序 */
+                    temp.sort((a, b)=>{
+                        return b.weight - a.weight;
                     });
+                    for (let i = 0; i < temp.length; i++) {
+                        temp[i].color = rgbToHex(temp[i].color[0], temp[i].color[1], temp[i].color[2]);
+                    }
+                    console.log(...temp);
                     setWishColor(temp);
                     analysisDoneCallBack();
                 }, 2000);

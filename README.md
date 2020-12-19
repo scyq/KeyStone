@@ -12,7 +12,7 @@
 
 1. 确保您的机器联网且**安装了Python3**；
 
-2. 安装Python3依赖`fastapi`和`uvicorn`（如果确保机器有以下的库，可跳过）
+2. 安装Python3依赖`fastapi`,`uvicorn`,`jieba`（如果确保机器有以下的库，可跳过）
 
    1. ```shell
       pip install fastapi
@@ -20,6 +20,10 @@
 
    2. ```shell
       pip install uvicorn
+      ```
+      
+   3. ```shell
+      pip install jieba
       ```
 
 3. 如果只需要查看前端设计和交互，请访问[GitHub Pages](https://scyq.github.io/Software-Interface-Prototype-Automatic-Generator/)。若要使用功能请逐步操作。
@@ -51,7 +55,7 @@
 
    未来会部署在服务器上，免去繁琐的安装过程。
 
-   以上步骤如果出现问题，请务必确保Python3、fastapi、uvicore、node的正确安装。
+   以上步骤如果出现问题，请务必确保Python3、fastapi、uvicore、jieba、node的正确安装。
 
 ## Files
 
@@ -63,12 +67,12 @@
 
 ## TO-DO & BUGS
 
-- [ ] 当爬取的图片存在不能识别情况，后端无法返回，前端无限卡死
+- [x] 当爬取的图片存在不能识别情况，后端无法返回，前端无限卡死
 - [x] 功能需求的词义提取
 - [x] 功能词库的扩充 (Part)
 - [x] 网站类型的标注 (Part)
 - [x] 预览内容的及时变更
-- [ ] 颜色的渲染（primary 和 secondary 的选择，参考material-ui的实现）
+- [x] 颜色的渲染（primary 和 secondary 的选择，参考material-ui的实现）
 - [ ] 根据网站类型标注的多种布局
 - [x] 后端分开识别内容（功能提取不需要下载图片）
 - [ ] 清除图片cache
@@ -79,11 +83,5 @@
   - Material-UI
 - fastapi
 - http-server
-
-
-
-## Algorithm
-
-- Color Thief
-  - 颜色提取算法
+- jieba
 

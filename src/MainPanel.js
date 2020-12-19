@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ConfigPanel from './ConfigPanel';
 
@@ -29,6 +28,10 @@ export default function MainPanel(props) {
                 setStatus={props.setStatus}
                 customFunction={props.customFunction}
                 design={props.design}
+                primaryColor={props.primaryColor}
+                secondaryColor={props.secondaryColor}
+                setPrimary={props.setPrimary}
+                setSecondary={props.setSecondary}
             >
             </ConfigPanel>
         </div>

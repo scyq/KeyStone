@@ -5,8 +5,6 @@ import { Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Backdrop from '@material-ui/core/Backdrop';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { Switch } from '@material-ui/core';
 import nlpSearchFunc from './WebReq';
 import { nlpSearchColor } from './WebReq';
 import Paper from '@material-ui/core/Paper';
@@ -17,6 +15,15 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ReplayIcon from '@material-ui/icons/Replay';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Avatar from '@material-ui/core/Avatar';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemText from '@material-ui/core/ListItemText';
+import BorderColorIcon from '@material-ui/icons/BorderColor';
+import CheckIcon from '@material-ui/icons/Check';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -99,8 +106,13 @@ export default function ConfigPanel(props) {
     const [ifStartAnalysis, setIfStartAnalysis] = useState(false);  /* 是否开始分析 */
     const [funcInput, setFuncInput] = useState("");                 /* 更改用户功能需求输入 */
     const [colorStyleInput, setColorStyleInput] = useState("");     /* 获取用户对颜色需求的输入 */
-    const [wishColor, setWishColor] = useState([]);                 /* 提取用户可能期待的颜色，这个不是最终的颜色 */
-    const [appliedColor, setApplyColor] = useState(["White"]);      /* 最终应用的颜色，依赖于用户的选择 */
+
+    /* 提取用户可能期待的颜色，这个不是最终的颜色 */
+    /* wishColor ColorInfo 对象 */
+    const [wishColor, setWishColor] = useState([]);
+
+    /* 确定谁打开，需要传入rgb */
+    const [whoOpen, setWhoOpen] = useState("");
 
     /* 获取用户对功能需求的输入 */
     const funcDemandChange = (event) => {
@@ -125,6 +137,49 @@ export default function ConfigPanel(props) {
 
     const handleRender = () => {
         props.setStatus(1);
+    }
+
+    function SimpleDialog(props) {
+
+        let open = whoOpen === props.color;
+
+        return (
+            <Dialog
+                onClose={() => setWhoOpen("")}
+                aria-labelledby="simple-dialog-title"
+                open={open}
+                style={{
+                    backgroundColor: "transparent",
+                    boxShadow: 'none'
+                }}
+            >
+                <DialogTitle id="simple-dialog-title">颜色设置</DialogTitle>
+                <List>
+                    <ListItem autoFocus button onClick={() => {
+                        props.setPrimary(props.color);
+                        setWhoOpen("");
+                    }}>
+                        <ListItemAvatar>
+                            <Avatar style={{ backgroundColor: "white" }}>
+                                <BorderColorIcon color="primary" />
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText primary="设置为主色调" />
+                    </ListItem>
+                    <ListItem autoFocus button onClick={() => {
+                        props.setSecondary(props.color);
+                        setWhoOpen("");
+                    }}>
+                        <ListItemAvatar>
+                            <Avatar style={{ backgroundColor: "white" }}>
+                                <BorderColorIcon color="secondary" />
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText primary="设置为配色调" />
+                    </ListItem>
+                </List>
+            </Dialog>
+        );
     }
 
 
@@ -208,46 +263,53 @@ export default function ConfigPanel(props) {
 
             case 2:
                 // 猜你喜欢的颜色搭配
-                const colorBar = wishColor.map((rgb) => {
+                const colorBar = wishColor.map((colorInfo) => {
                     return (
-                        <div key={rgb}>
+                        <div key={colorInfo.color}
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}
+                        >
                             <div style={{
-                                backgroundColor: rgb,
+                                backgroundColor: colorInfo.color,
                                 height: '100px',
                                 width: '100px',
                                 padding: '20px',
                                 position: "relative",
                                 marginRight: "5px",
-                                borderStyle: "solid"
-                            }} >
-                            </div>
-                            <FormControlLabel
-                                value={rgb}
-                                control={
-                                    <div style={{
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        alignItems: 'center',
-                                        justifyContent: 'center'
-                                    }}>
-                                        <Switch
-                                            color="primary"
-                                            label={rgb}
-                                        >
-                                        </Switch>
-                                        <Switch
-                                            color="secondary"
-                                            label={rgb}
-                                        >
-                                        </Switch>
-                                    </div>
-                                }
-
-                                label={rgb}
-                                className={classes.rgbFont}
-                                labelPlacement="top"
+                                borderStyle: "solid",
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}
                             >
-                            </FormControlLabel>
+                                <Button
+                                    style={{
+                                        height: '100%',
+                                        width: '100px',
+                                    }}
+                                    onClick={
+                                        () => {
+                                            setWhoOpen(colorInfo.color);
+                                        }
+                                    }>
+                                </Button>
+                            </div>
+                            <SimpleDialog
+                                color={colorInfo.color}
+                                setPrimary={props.setPrimary}
+                                setSecondary={props.setSecondary}
+                                word={colorInfo.word}
+                                setWhoOpen={setWhoOpen}
+                            />
+                            <h2 style={{ color: colorInfo.color }}>{colorInfo.color}</h2>
+                            <h3 style={{ color: colorInfo.color }}>{colorInfo.word}</h3>
+                            {props.primaryColor === colorInfo.color && <CheckIcon fontSize="large" color="primary" />}
+                            {props.secondaryColor === colorInfo.color && <CheckIcon fontSize="large" color="secondary" />}
                         </div>
                     );
                 });
@@ -260,7 +322,7 @@ export default function ConfigPanel(props) {
                             fontSize: "24px",
                             fontFamily: "Microsoft Yahei",
                         }}>
-                            第一排开关为主色，第二排开关为配色
+                            鼠标点击色块以设置配色
                         </p>
                         <div className={classes.colorBlock}>
                             {colorBar}
@@ -307,6 +369,8 @@ export default function ConfigPanel(props) {
                         <ConfigPreview
                             customFunction={props.customFunction}
                             design={props.design}
+                            primaryColor={props.primaryColor}
+                            secondaryColor={props.secondaryColor}
                         >
                         </ConfigPreview>
                         <div className={classes.emptyBlock}></div>
