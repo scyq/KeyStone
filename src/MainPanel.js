@@ -29,6 +29,10 @@ export default function MainPanel(props) {
                 setStatus={props.setStatus}
                 customFunction={props.customFunction}
                 design={props.design}
+                primaryColor={props.primaryColor}
+                secondaryColor={props.secondaryColor}
+                setPrimary={props.setPrimary}
+                setSecondary={props.setSecondary}
             >
             </ConfigPanel>
         </div>

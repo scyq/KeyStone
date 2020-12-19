@@ -21,7 +21,6 @@ function getSteps() {
 
 export default function App() {
   const [status, setStatus] = useState(-1);
-  const [renderBg, setRenderBg] = useState("White");
   const [customFunction, setFunction] = useState("您还未输入");
 
   const [design, setDesign] = useState({
@@ -32,6 +31,10 @@ export default function App() {
 
   /* 到哪儿一步了 */
   const [activeStep, setActiveStep] = useState(0);
+
+  /* 颜色 */
+  const [primaryColor, setPrimary] = useState("#ffffff");
+  const [secondaryColor, setSecondary] = useState("#ffffff");
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -47,16 +50,6 @@ export default function App() {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
-    },
-
-    Render: {
-      height: '100vh',
-      width: '200vh',
-      background: renderBg
-    },
-
-    templateRender: {
-      background: renderBg
     },
 
     BarTitle: {
@@ -122,6 +115,10 @@ export default function App() {
             setFunction={setFunction}
             customFunction={customFunction}
             design={design}
+            primaryColor={primaryColor}
+            secondaryColor={secondaryColor}
+            setPrimary={setPrimary}
+            setSecondary={setSecondary}
           >
 
           </MainPanel>

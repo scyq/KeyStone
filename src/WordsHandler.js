@@ -6,6 +6,36 @@
 
 import thesaurus from './Thesaurus.json'
 
+
+/*
+    颜色信息类
+*/
+class ColorInfo {
+    /*
+        @param {String} color 颜色的rgb或16进制
+        @param {String} word 该颜色的词语来源
+        @param {String} weight 该颜色的推荐权重
+    */
+    constructor(color, word, weight) {
+        if (arguments.length <3) {
+            this.color = color;
+            this.word = word;
+            this.weight = 1;
+        }
+        else {
+            this.color = color;
+            this.word = word;
+            this.weight = weight;
+        }
+    }
+
+    weightUp() {
+        this.weight += 1;
+    }
+}
+
+
+
 class WordsHandler {
 
     getThis() {
@@ -76,4 +106,5 @@ class WordsHandler {
 
 }
 
-export default WordsHandler
+export default WordsHandler;
+export { ColorInfo };
