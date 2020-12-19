@@ -23,6 +23,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
+import CheckIcon from '@material-ui/icons/Check';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -143,28 +144,35 @@ export default function ConfigPanel(props) {
         let open = whoOpen === props.color;
 
         return (
-            <Dialog 
-                onClose={() => setWhoOpen("")} 
-                aria-labelledby="simple-dialog-title" 
-                open={open} 
-                style={{backgroundColor: "transparent",
-                boxShadow: 'none'
+            <Dialog
+                onClose={() => setWhoOpen("")}
+                aria-labelledby="simple-dialog-title"
+                open={open}
+                style={{
+                    backgroundColor: "transparent",
+                    boxShadow: 'none'
                 }}
-                >
+            >
                 <DialogTitle id="simple-dialog-title">颜色设置</DialogTitle>
                 <List>
-                    <ListItem autoFocus button onClick={() => props.setPrimary(props.color)}>
+                    <ListItem autoFocus button onClick={() => {
+                        props.setPrimary(props.color);
+                        setWhoOpen("");
+                    }}>
                         <ListItemAvatar>
-                            <Avatar style={{backgroundColor: "white"}}>
-                                <BorderColorIcon color="primary"/>
+                            <Avatar style={{ backgroundColor: "white" }}>
+                                <BorderColorIcon color="primary" />
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText primary="设置为主色调" />
                     </ListItem>
-                    <ListItem autoFocus button onClick={() => props.setSecondary(props.color)}>
+                    <ListItem autoFocus button onClick={() => {
+                        props.setSecondary(props.color);
+                        setWhoOpen("");
+                    }}>
                         <ListItemAvatar>
-                            <Avatar style={{backgroundColor: "white"}}>
-                                <BorderColorIcon color="secondary"/>
+                            <Avatar style={{ backgroundColor: "white" }}>
+                                <BorderColorIcon color="secondary" />
                             </Avatar>
                         </ListItemAvatar>
                         <ListItemText primary="设置为配色调" />
@@ -291,15 +299,17 @@ export default function ConfigPanel(props) {
                                     }>
                                 </Button>
                             </div>
-                            <SimpleDialog 
-                                color={colorInfo.color} 
+                            <SimpleDialog
+                                color={colorInfo.color}
                                 setPrimary={props.setPrimary}
                                 setSecondary={props.setSecondary}
                                 word={colorInfo.word}
                                 setWhoOpen={setWhoOpen}
                             />
-                            <h2 style={{color: colorInfo.color}}>{colorInfo.color}</h2>
-                            <h3 style={{color: colorInfo.color}}>{colorInfo.word}</h3>
+                            <h2 style={{ color: colorInfo.color }}>{colorInfo.color}</h2>
+                            <h3 style={{ color: colorInfo.color }}>{colorInfo.word}</h3>
+                            {props.primaryColor === colorInfo.color && <CheckIcon fontSize="large" color="primary" />}
+                            {props.secondaryColor === colorInfo.color && <CheckIcon fontSize="large" color="secondary" />}
                         </div>
                     );
                 });
@@ -359,6 +369,8 @@ export default function ConfigPanel(props) {
                         <ConfigPreview
                             customFunction={props.customFunction}
                             design={props.design}
+                            primaryColor={props.primaryColor}
+                            secondaryColor={props.secondaryColor}
                         >
                         </ConfigPreview>
                         <div className={classes.emptyBlock}></div>

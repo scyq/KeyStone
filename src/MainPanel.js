@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ConfigPanel from './ConfigPanel';
 

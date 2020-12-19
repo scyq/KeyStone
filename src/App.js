@@ -132,6 +132,8 @@ export default function App() {
       <ShowCase 
         template={design["template"]}
         setStatus={setStatus}
+        primaryColor={primaryColor}
+        secondaryColor={secondaryColor}
       >
 
       </ShowCase>);
