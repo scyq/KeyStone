@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a1f35e77397b6c276d981b455c706396",
+    "revision": "4e9cb23931b96ae53124a193913a77e1",
     "url": "/Software-Interface-Prototype-Automatic-Generator/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Software-Interface-Prototype-Automatic-Generator/static/css/2.c084be02.chunk.css"
   },
   {
-    "revision": "3a2912826c0fa5b51f99",
+    "revision": "e2ae26b03870deb34dd2",
     "url": "/Software-Interface-Prototype-Automatic-Generator/static/css/main.5ecd60fb.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Software-Interface-Prototype-Automatic-Generator/static/js/2.5ffc895d.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "3a2912826c0fa5b51f99",
-    "url": "/Software-Interface-Prototype-Automatic-Generator/static/js/main.379cb992.chunk.js"
+    "revision": "e2ae26b03870deb34dd2",
+    "url": "/Software-Interface-Prototype-Automatic-Generator/static/js/main.4c506f3c.chunk.js"
   },
   {
     "revision": "06d620f78fb0f55b7e2e",
