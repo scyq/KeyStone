@@ -15,18 +15,18 @@ import ShowCase from './ShowCase';
 
 /* 每一步的内容 */
 function getSteps() {
-  return ['应用场景', '风格配色', '猜您喜欢', '微调修改'];
+  return ['Application Scenarios', 'Style & Color', 'Guess what you like', 'Fine-tuning modifications'];
 }
 
 
 export default function App() {
   const [status, setStatus] = useState(-1);
-  const [customFunction, setFunction] = useState("您还未输入");
+  const [customFunction, setFunction] = useState("You haven't input yet");
 
   const [design, setDesign] = useState({
-      "layout": [],
-      "navigate": [],
-      "template": []
+    "layout": [],
+    "navigate": [],
+    "template": []
   });
 
   /* 到哪儿一步了 */
@@ -57,7 +57,7 @@ export default function App() {
     },
 
     MainPanel: {
-      display: "flex",      
+      display: "flex",
       flexGrow: 1,
       width: '100%',
     },
@@ -71,10 +71,7 @@ export default function App() {
 
   if (status === -1) {
     return (
-      // <CustomDesign>
-
-      // </CustomDesign>
-      <Index 
+      <Index
         setStatus={setStatus}
       >
       </Index>
@@ -83,10 +80,10 @@ export default function App() {
   else if (status === 0) {
     return (
       <Container component="main" className={classes.root}>
-        <AppBar style={{ background: "#36648B" }}>
+        <AppBar style={{ backgroundImage: "linear-gradient(to right , #36648B, rgb(233,64, 87) 50%)" }}>
           <Toolbar>
             <Typography variant="h6" color="inherit" noWrap className={classes.BarTitle}>
-              软件交互界面原型自动生成系统
+              Software Interface Prototype Automatic Generator
             </Typography>
             <IconButton color="inherit" onClick={() => {
               const w = window.open('about:blank');
@@ -129,7 +126,7 @@ export default function App() {
   }
   else if (status === 1) {
     return (
-      <ShowCase 
+      <ShowCase
         template={design["template"]}
         setStatus={setStatus}
         primaryColor={primaryColor}

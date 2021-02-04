@@ -31,33 +31,33 @@ function ProductHero(props) {
   const { classes } = props;
 
   return (
-      <ProductHeroLayout backgroundClassName={classes.background} style={{overflow: "auto"}}>
-        {/* Increase the network loading priority of the background image. */}
-        <img style={{ display: 'none' }} src={backgroundImage} alt="increase priority" />
-        <div className={classes.hi}>
-          <Typography color="inherit" align="center" variant="h1" marked="center" style={{ marginTop: 180 }}>
-            软件交互界面原型自动生成系统
+    <ProductHeroLayout backgroundClassName={classes.background} style={{ overflow: "auto" }}>
+      {/* Increase the network loading priority of the background image. */}
+      <img style={{ display: 'none' }} src={backgroundImage} alt="increase priority" />
+      <div className={classes.hi}>
+        <Typography color="inherit" align="center" variant="h1" marked="center" style={{ marginTop: 180 }}>
+          Software Interface Prototype Automatic Generator
         </Typography>
 
-          <Typography color="inherit" align="center" variant="h4" style={{ marginBottom: 20, marginTop: 400 }}>
-            把梦想照进现实
+        <Typography color="inherit" align="center" variant="h4" style={{ marginBottom: 20, marginTop: 400 }}>
+          Bringing dreams into reality
         </Typography>
-          <Button
-            color="secondary"
-            variant="contained"
-            size="large"
-            style={{ width: 200, marginBottom: 10}}
-            onClick={()=>{
-              props.setStatus(0);
-            }}
-          >
-            Try it Now!
+        <Button
+          color="secondary"
+          variant="contained"
+          size="large"
+          style={{ width: 200, marginBottom: 10 }}
+          onClick={() => {
+            props.setStatus(0);
+          }}
+        >
+          Try it Now!
         </Button>
-          <Typography variant="body2" color="inherit" align="center">
-            更多内容请通过顶部栏访问GitHub主页.
+        <Typography variant="body2" color="inherit" align="center">
+          For more, please visit the GitHub homepage via the top bar.
         </Typography>
-        </div>
-      </ProductHeroLayout>
+      </div>
+    </ProductHeroLayout>
   );
 }
 

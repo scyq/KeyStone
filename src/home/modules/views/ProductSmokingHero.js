@@ -40,11 +40,11 @@ function ProductSmokingHero(props) {
         w.location.href = 'https://github.com/scyq/Software-Interface-Prototype-Automatic-Generator/issues';
       }}>
         <Typography variant="h4" component="span">
-          碰到麻烦了？需要帮助？
+          Got a problem? Need help?
         </Typography>
       </Button>
       <Typography variant="subtitle1" className={classes.link} >
-        我们为您持续提供帮助，欢迎在GitHub上发布您碰到的issue
+        We are here to help you on an ongoing basis, feel free to post your issues on GitHub
       </Typography>
       <IconButton color="inherit" onClick={() => {
         const w = window.open('about:blank');

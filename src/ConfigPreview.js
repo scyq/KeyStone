@@ -27,7 +27,7 @@ export default function ConfigPreview(props) {
                     <ListItemIcon>
                         <FiberNewIcon />
                     </ListItemIcon>
-                    <ListItemText primary={'需求功能'}>
+                    <ListItemText primary={'Function'}>
                     </ListItemText>
                     <ListItemText primary={props.customFunction}>
                     </ListItemText>
@@ -39,7 +39,7 @@ export default function ConfigPreview(props) {
                     <ListItemIcon>
                         <BorderAllIcon />
                     </ListItemIcon>
-                    <ListItemText primary={'采取的布局'}>
+                    <ListItemText primary={'Layout'}>
                     </ListItemText>
                     <ListItemText primary={props.design["layout"][0]}>
                     </ListItemText>
@@ -51,7 +51,7 @@ export default function ConfigPreview(props) {
                     <ListItemIcon>
                         <CallSplitIcon />
                     </ListItemIcon>
-                    <ListItemText primary={'导航模式'}>
+                    <ListItemText primary={'Navigation'}>
                     </ListItemText>
                     <ListItemText primary={props.design["navigate"][0]}>
                     </ListItemText>

@@ -59,11 +59,11 @@ function ProductValues(props) {
               <SelectAllIcon className={classes.iconSize} >
               </SelectAllIcon>
               <Typography variant="h6" className={classes.title}>
-                算法生成
+                Algorithm Generation
               </Typography>
               <Typography variant="h5">
-                {'基于word2vector词向量以及自然语言处理的近义词生成系统。'}
-                {'帮您实现所有的需求，精确、优雅。'}
+                {'A near-sense word generation system based on word2vector word vectors and natural language processing.'}
+                {'Helping you achieve all your needs with precision and elegance.帮您实现所有的需求，精确而优雅。'}
               </Typography>
             </div>
           </Grid>
@@ -72,11 +72,11 @@ function ProductValues(props) {
               <PaletteIcon className={classes.iconSize}>
               </PaletteIcon>
               <Typography variant="h6" className={classes.title}>
-                缤纷色彩
+                Colorful
               </Typography>
               <Typography variant="h5">
-                {'根据您的输入的风格、喜好分析您喜欢的配色。'}
-                {'乐享缤纷，生来多彩。'}
+                {'Analyze your preferred color scheme based on the style and preference of your input.'}
+                {'Enjoy the colorful, born to be colorful.'}
               </Typography>
             </div>
           </Grid>
@@ -86,11 +86,11 @@ function ProductValues(props) {
 
               </ViewCompactIcon>
               <Typography variant="h6" className={classes.title}>
-                智能布局
+                Smart Layout
               </Typography>
               <Typography variant="h5">
-                {'基于人机交互引论的智能布局推荐系统。'}
-                {'帮您自动生成简洁、大方的网页布局。'}
+                {'A smart layout recommendation system based on human-computer interaction theory.'}
+                {'Help you automatically generate clean and generous web layouts.'}
               </Typography>
             </div>
           </Grid>

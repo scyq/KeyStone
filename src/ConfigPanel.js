@@ -153,7 +153,7 @@ export default function ConfigPanel(props) {
                     boxShadow: 'none'
                 }}
             >
-                <DialogTitle id="simple-dialog-title">颜色设置</DialogTitle>
+                <DialogTitle id="simple-dialog-title">Color Configuration</DialogTitle>
                 <List>
                     <ListItem autoFocus button onClick={() => {
                         props.setPrimary(props.color);
@@ -164,7 +164,7 @@ export default function ConfigPanel(props) {
                                 <BorderColorIcon color="primary" />
                             </Avatar>
                         </ListItemAvatar>
-                        <ListItemText primary="设置为主色调" />
+                        <ListItemText primary="Set the Primary Color" />
                     </ListItem>
                     <ListItem autoFocus button onClick={() => {
                         props.setSecondary(props.color);
@@ -175,7 +175,7 @@ export default function ConfigPanel(props) {
                                 <BorderColorIcon color="secondary" />
                             </Avatar>
                         </ListItemAvatar>
-                        <ListItemText primary="设置为配色调" />
+                        <ListItemText primary="Set the Secondary Color" />
                     </ListItem>
                 </List>
             </Dialog>
@@ -207,7 +207,7 @@ export default function ConfigPanel(props) {
                                 required
                                 fullWidth
                                 id="funcInput"
-                                label='试试输入 "我想要一个记录生活的个人博客"'
+                                label='Try typing "I want a personal blog that documents my life"'
                                 name="funcInput"
                                 autoComplete="funcInput"
                                 autoFocus
@@ -222,7 +222,7 @@ export default function ConfigPanel(props) {
                             >
                             </img>
                             <span className={classes.font}>
-                                请输入您软件的应用场景
+                                Please enter the application scenario of your software
                             </span>
                         </span>
                         <div className={classes.emptyBlock}></div>
@@ -247,7 +247,7 @@ export default function ConfigPanel(props) {
                                 required
                                 fullWidth
                                 id="colorInput"
-                                label='试试输入 "我喜欢活泼生动的画风"'
+                                label='Try typing "I like a lively and vivid style"'
                                 name="colorInput"
                                 autoComplete="colorInput"
                                 autoFocus
@@ -255,7 +255,7 @@ export default function ConfigPanel(props) {
                             />
                         </form>
                         <span className={classes.font}>
-                            请输入您想要的风格配色
+                            Please enter the style and color you want
                         </span>
                         <div className={classes.emptyBlock}></div>
                     </div>
@@ -316,13 +316,13 @@ export default function ConfigPanel(props) {
                 return (
                     <div className={classes.inputPos}>
                         <p className={classes.font}>
-                            根据您的输入，我们为您推荐了以下色彩
+                            Based on your input, we recommend the following colors for you
                         </p>
                         <p style={{
                             fontSize: "24px",
                             fontFamily: "Microsoft Yahei",
                         }}>
-                            鼠标点击色块以设置配色
+                            Mouse click on the color block to set the color scheme
                         </p>
                         <div className={classes.colorBlock}>
                             {colorBar}
@@ -348,7 +348,7 @@ export default function ConfigPanel(props) {
                                 required
                                 fullWidth
                                 id="otherDemand"
-                                label='例如 "一定要突出中心元素！"'
+                                label='For example, "Be sure to highlight the central element!"'
                                 name="otherDemand"
                                 autoComplete="otherDemand"
                                 autoFocus
@@ -356,7 +356,7 @@ export default function ConfigPanel(props) {
                             />
                         </form>
                         <span className={classes.font}>
-                            您还有什么额外需求吗？
+                            Do you have any additional requirements?
                         </span>
                         <div className={classes.emptyBlock}></div>
                     </div>
@@ -449,7 +449,7 @@ export default function ConfigPanel(props) {
                         size="large"
                         startIcon={<ReplayIcon />}
                     >
-                        重新选择
+                        Reselect
                     </Button>
                     <Button
                         variant="contained"
@@ -459,7 +459,7 @@ export default function ConfigPanel(props) {
                         size="large"
                         endIcon={<PlayArrowIcon />}
                     >
-                        查看效果
+                        View Results
                     </Button>
                 </Paper>
             )
