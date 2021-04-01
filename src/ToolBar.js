@@ -19,7 +19,7 @@ export default function ToolBar(props) {
             () => {
               // 保存
               let blob = new Blob([document.documentElement.outerHTML], { type: "text/plain;charset=utf-8" });
-              saveAs(blob, "sipag.html");
+              saveAs(blob, "saip.html");
             }
           }
         >

@@ -174,7 +174,7 @@ export default function TopBar() {
                         <MenuIcon />
                     </IconButton>
                     <Typography className={classes.title} variant="h6" noWrap>
-                        SIPAG
+                        SAIP
                     </Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>

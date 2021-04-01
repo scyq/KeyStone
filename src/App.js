@@ -83,7 +83,7 @@ export default function App() {
         <AppBar style={{ backgroundImage: "linear-gradient(to right , #36648B, rgb(233,64, 87) 50%)" }}>
           <Toolbar>
             <Typography variant="h6" color="inherit" noWrap className={classes.BarTitle}>
-              Software Interface Prototype Automatic Generator
+              Semi-Automatic software user Interface Prototyping
             </Typography>
             <IconButton color="inherit" onClick={() => {
               const w = window.open('about:blank');

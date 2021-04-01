@@ -32,7 +32,7 @@ function AppAppBar(props) {
             className={classes.title}
             href="https://github.com/scyq/Software-Interface-Prototype-Automatic-Generator"
           >
-            {'SIPAG'}
+            {'SAIP'}
           </Link>
         </Toolbar>
       </AppBar>

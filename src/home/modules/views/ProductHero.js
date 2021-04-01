@@ -36,7 +36,7 @@ function ProductHero(props) {
       <img style={{ display: 'none' }} src={backgroundImage} alt="increase priority" />
       <div className={classes.hi}>
         <Typography color="inherit" align="center" variant="h1" marked="center" style={{ marginTop: 180 }}>
-          Software Interface Prototype Automatic Generator
+          Semi-Automatic software user Interface Prototyping
         </Typography>
 
         <Typography color="inherit" align="center" variant="h4" style={{ marginBottom: 20, marginTop: 400 }}>

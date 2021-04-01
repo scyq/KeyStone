@@ -10,7 +10,7 @@ import { nlpSearchColor } from './WebReq';
 import Paper from '@material-ui/core/Paper';
 import ConfigPreview from './ConfigPreview';
 import arrow from './logo/arrow.png';
-import sipag from './logo/sipag.png';
+import saip from './logo/saip.png';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ReplayIcon from '@material-ui/icons/Replay';
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
         height: "100px"
     },
     logo: {
-        width: "580px",
+        width: "460px",
         height: "210px"
     },
     arrow: {
@@ -194,9 +194,9 @@ export default function ConfigPanel(props) {
                 return (
                     <div className={classes.inputPos}>
                         <img
-                            src={sipag}
+                            src={saip}
                             className={classes.logo}
-                            alt="SIPAG"
+                            alt="SAIP"
                         >
                         </img>
                         <form className={classes.form} noValidate>
@@ -234,9 +234,9 @@ export default function ConfigPanel(props) {
                 return (
                     <div className={classes.inputPos}>
                         <img
-                            src={sipag}
+                            src={saip}
                             className={classes.logo}
-                            alt="SIPAG"
+                            alt="SAIP"
                         >
                         </img>
                         <form className={classes.form} noValidate>
@@ -306,8 +306,8 @@ export default function ConfigPanel(props) {
                                 word={colorInfo.word}
                                 setWhoOpen={setWhoOpen}
                             />
-                            <h2 style={{ color: colorInfo.color }}>{colorInfo.color}</h2>
-                            <h3 style={{ color: colorInfo.color }}>{colorInfo.word}</h3>
+                            <h2>{colorInfo.color}</h2>
+                            <h3>{colorInfo.word}</h3>
                             {props.primaryColor === colorInfo.color && <CheckIcon fontSize="large" color="primary" />}
                             {props.secondaryColor === colorInfo.color && <CheckIcon fontSize="large" color="secondary" />}
                         </div>
@@ -336,9 +336,9 @@ export default function ConfigPanel(props) {
                 return (
                     <div className={classes.inputPos}>
                         <img
-                            src={sipag}
+                            src={saip}
                             className={classes.logo}
-                            alt="SIPAG"
+                            alt="SAIP"
                         >
                         </img>
                         <form className={classes.form} noValidate>

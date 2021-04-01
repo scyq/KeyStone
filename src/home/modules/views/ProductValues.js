@@ -63,7 +63,7 @@ function ProductValues(props) {
               </Typography>
               <Typography variant="h5">
                 {'A near-sense word generation system based on word2vector word vectors and natural language processing.'}
-                {'Helping you achieve all your needs with precision and elegance.帮您实现所有的需求，精确而优雅。'}
+                {'Helping you achieve all your needs with precision and elegance.'}
               </Typography>
             </div>
           </Grid>
